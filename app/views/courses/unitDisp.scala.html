@@ -1,0 +1,46 @@
+@(units: List[Unit], user: User)
+
+<!-- Ajax add Unit form -->
+<script type="text/javascript" src="@routes.Assets.at("javascripts/addForms.js")"></script>
+
+<ul id="unitList">
+@units.map { case unit =>
+	<li id="@unit.id" class="unit">
+		<dl class="unitAct">
+			<dt>Schedule: @unit.schedule</dt>
+			<dt class="activities">Activities</dt>
+
+			<!--Restrict "seeing" admin buttons. This, however, is not adequate for blocking access to Javascript. 
+			   More robust authorization is needed on whole.-->
+			<!-- var strLink = "2.html&Key=" + scrt_var;
+				 document.getElementById("link2").setAttribute("href",strLink); -->
+			@{user.role match {
+			  	case "INSTRUCTOR" => {
+			  		<ul class="activityMenu">
+			  			<li><a href="#">New Activity</a>
+			  				<ul>
+								<li><a href="http://localhost:9000/createNewQuiz" target="_blank">Cloze quiz</a></li>
+			  				</ul>
+			  			</li>
+			  		</ul>
+			  	}
+			  	case "STUDENT" => None
+			}}
+
+    	</dl>
+		<dl class="unitDescInst">
+			<dt class="unitTitle">@unit.title</dt>
+			<dd>@unit.descrip</dd>
+		</dl>
+		<dl class="unitCommun">
+			<textarea class="unitNotes" placeholder="Notes"></textarea>
+		</dl>
+    	<span class="loader">Loading</span>
+
+		<div class="unitSizeToggle">
+			<button class="expand">expand</button>
+			<button class="collapse">collapse</button>
+		</div>
+	</li>
+}<!-- End unit list mapping -->
+</ul><!-- End - unitList -->

@@ -1,0 +1,54 @@
+@(courseForm: Form[Course])
+
+@import helper._
+@import helper.twitterBootstrap._
+    
+@if(courseForm.hasErrors) {
+    <div class="alert-message error">
+		<p><strong>Oops</strong> Please fix all errors</p>
+    </div>
+}
+
+@helper.form(action = routes.Courses.createCourse) {
+    
+    <fieldset>
+			<legend>Course information</legend>
+            
+            @inputText(
+                courseForm("title"), 
+                '_label -> "Course Title"
+            )
+            
+            @inputText(
+                courseForm("courseNum"), 
+                '_label -> "Course Number"
+            )
+            
+            @inputText(
+                courseForm("section"), 
+                '_label -> "Section"
+            )
+
+    	 	@inputText(
+                courseForm("semester"), 
+                '_label -> "Semester"
+            )
+            
+            @inputText(
+                courseForm("year"), 
+                '_label -> "Year"
+            )
+            
+	</fieldset>
+
+	<div class="actions">
+		<input type="submit" class="btn primary" value="Create">
+		<a href="@routes.Application.index" class="btn">Cancel</a>
+	</div>
+    
+} <!-- End - helper.form -->
+
+
+
+
+    

@@ -1,0 +1,216 @@
+@charset "UTF-8";
+/* CSS Document */
+#main-container {
+	height: auto;
+	width: 675px;
+	margin-left: 30px;
+}
+
+#QandA-area {
+	clear: both;
+	width: 100%;
+	float: left
+}
+
+#cloze-questions-create, #cloze-questions-present {
+	float: left;
+	width: 470px;
+}
+
+#draggables-panel {
+	float:right;	
+}
+
+#drag-ans-list {
+	margin-top: 15px;
+	background-color: #EDBFAC;
+	border-color: #EDBFAC;
+	border-width: 2px;
+	border-style: solid;
+	padding: 12px;
+	/*cursor: move;*/
+}
+
+#header-panel {
+	float: left;
+	width: 100%;
+	margin-top:15px;
+	overflow:hidden;
+}
+
+.admin-panel {
+	float: right;
+	background-color: #CC9;
+	padding-right: 5px;
+	padding-top: 4px;
+	padding-bottom: 3px;
+	overflow:auto;
+	margin-top:4px;
+}
+
+#diagnostic-log {
+	border-width: 1px;
+	border-color: #000;
+	border-style: solid;
+	margin-top: 5px;
+}
+
+#diag-log-div {
+	margin-top: 20px;
+	width: 100%;	
+}
+
+#log-panel {
+	margin-left: 30px;
+}
+
+#score {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #03F;
+}
+
+#save-text-button {
+	margin-top: 4px;
+}
+
+#app-banner {
+	width: 70%;
+	display:inline-block;
+	overflow:auto;
+	float:left;
+}
+
+#app-name {
+	/*float:left;*/
+	/*overflow:auto;*/
+	clear:both;
+	margin-top:-6px;
+	margin-bottom:4px;
+}
+
+#text-buttons {
+	clear: both;
+}
+
+#quiz-title-create {
+	float:left;
+	height:auto;
+	width:80%;
+}
+
+#quiz-title-display {
+	float:left;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color:#43765F
+}
+
+#quiz-title-label {
+	float:left;
+	height:auto;
+	margin-right:5px;
+	font-size:12px;
+}
+
+#quiz-title-div {
+	overflow:auto;
+	clear:both;
+}
+
+#enterTextMessage {
+	background-image:url(../images/1.png);
+	background-repeat:no-repeat;
+	padding-left:50px;
+	background-position:4px 4px;
+}
+
+#savedTextMessage {
+	background-image:url(../images/2.png);
+	background-repeat:no-repeat;
+	padding-left:50px;
+	background-position:4px 4px;
+}
+
+body {
+		
+}
+
+h1 {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 24px;
+	font-style: bold;
+	color: #603;
+	margin-bottom: 0;
+	float: left;
+}
+
+li {
+	list-style: none;
+}
+
+label {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+}
+
+.user-message {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	background-color: #FFC;
+	padding: 5px;
+	width: 100%;
+}
+
+.incorrectStyle {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #F63;
+	padding-left: 5px;
+}
+
+.correctStyle {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: green;
+	padding-left: 5px;
+}
+
+.correctAns {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #0C0;
+}
+
+.draggable {
+	margin-bottom: 4px;
+}
+
+.draggables-buttons {
+	/*clear: both;*/
+}
+
+.qu {
+	/**/
+}
+
+.br {
+	margin-bottom:34px;
+}
+
+.cloze-field-incorrect {
+	border-color:#F00;
+}

@@ -1,0 +1,38 @@
+@(courses: Seq[Course], course: Course, units: List[Unit], user: User)
+
+@import models._
+
+@dashboard(courses, user){
+    
+	<header>
+        <hgroup class="dashHeader">
+            <h1>@course.courseNum</h1>
+			<h2>@course.title</h2>
+			<h3>Section @course.section</dd>
+			<h3>@course.semester @course.year</dd>
+			</div>
+        </hgroup>
+    </header>
+    
+    <input type="hidden" id="courseId" value="@course.id">
+
+	<article id="mainDbContent" class="tasks"> <!-- TO DO: Need to change this CSS class name -->
+    	
+    	<div id="unitsDisplayCont">
+    		@views.html.courses.unitDisp(units, user)
+    	</div>
+    	<div id="unitFormCont"></div>
+
+    	@{user.role match {
+		  	case "INSTRUCTOR" => <button id="newUnitBtn">New unit</button>
+		  	case "STUDENT" => None
+		}}
+    	
+	</article>
+		
+}
+		
+
+    
+
+

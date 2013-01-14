@@ -1,0 +1,6 @@
+@(quizAttempt: Attempt)
+
+<li data-project="@quizAttempt.quizId">
+    <a class="name" href="#@routes.Quizzes.attempt(quizAttempt.quizId, quizAttempt.attemptNum)">@quizAttempt.attemptNum</a>
+    <span class="loader">Loading</span>
+</li>

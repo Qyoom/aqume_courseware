@@ -1,0 +1,74 @@
+@(title: String) <!--TO DO: Need to fix this-->
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Quiz Wiz Creator</title>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/quiz.css")">
+    <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/quiz-gen-main.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="http://www.json.org/json2.js"></script>
+</head>
+
+<body onload="initCkBx()">
+	<div id="main-container">
+    	<div id="header-panel">
+        	<div id="app-banner">
+                <h1 id="app-name">Quiz Wiz Creator</h1>
+                <div id="quiz-title-div">
+                    <label id="quiz-title-label" style="display:inline-block" style="float:left">Quiz Title:</label>
+                    <input id="quiz-title-create" style="display:inline-block type="text" style="float:left" size="40"/>
+                    <label id="quiz-title-display" style="display:inline-block" style="float:left"></label>
+            	</div>
+            </div> <!-- app-banner -->
+            <div id="creator-admin-panel" class="admin-panel">
+                <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="allowRetriesCheckbox" onClick="procAllowRetry(this)"/>
+                    Allow Retries</label>
+                <br />
+                <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="DandDCheckbox" onClick="procDragDropCheck(this)"/>
+                    Allow Drag and Drop</label>
+                <br />
+            </div><!--admin-panel-->
+            <div id="taker-admin-panel" class="admin-panel" style="display: none">
+            </div>
+            <p id="enterTextMessage" class="user-message" draggable='false' style="display: inline-block">
+            	Type or paste text for your cloze quiz (a song lyric, or any kind of text). You can break text into
+                individual lines or paragraphs using the return key. Save the text when you are finished.</p>
+            <p id="savedTextMessage" class="user-message" draggable='false' style="display: none">
+                Double-click any word to create a blank cloze field. Click the 'Edit Text' button
+                to modify the quiz text. Click checkboxes to allow drag-and-drop answers or multiple retries. 
+				Click the 'Save Quiz' button.</p>
+			<p id="savedQuizMessage" class="user-message" draggable='false' style="display: none">
+				Your quiz has been saved. Now you can try it yourself. Type or drag answers to empty fields and then click 
+				the 'Check Answers' button to see your results.</p>
+            <p id="score" class="user-message" style="display: none"></p>
+			<div id="numbers"><div>
+        </div><!--header-panel-->
+        <div id="QandA-area">
+        	<textarea id="cloze-text-edit" cols="80" rows="25" draggable='false' style="display: inline-block"></textarea>
+            <div id="cloze-questions-create" style="display:none"></div>
+            <div id="cloze-questions-present" style="display:none"></div>
+            <div id="draggables-panel">
+                <ul id="drag-ans-list" draggable='false' style="display:none"></ul>
+                <input type="button" id="edit-draggables-button" class="draggables-buttons" value="Edit/Add Cloze Choices" onClick="editdraggables()" style="display:none"/>
+                <input type="button" id="save-draggables-button" class="draggables-buttons" value="Save Cloze Choices" onClick="savedraggables()" style="display:none"/>
+                <input type="button" id="shuffle-draggables-button" class="draggables-buttons" value="Shuffle Choices" onClick="shuffleChoices()" style="display:none"/>
+        	</div> <!-- draggables-panel -->
+        </div><!--QandA-area-->
+		<div id="text-buttons">
+			<input type="button" id="save-text-button" value="Save Text" onClick="saveText()" style="display: inline-block" /> 
+			<input type="button" id="edit-text-button" value="Edit Text" onClick="editText()" style="display: none" /> 
+			<input type="button" id="save-quiz-button" value="Save Quiz" onClick="saveQuiz()" style="display: none" /> 
+			<input type="button" id="edit-cloze-button" value="Edit Quiz" onClick="editClozeEntries()" style="display: none" />
+			<input type="button" id="check-answers-button" value="Check Answers" onClick="checkAnswers()" style="display: none" />
+		</div>
+	</div><!--main-container-->
+    <div id="log-panel">
+        <div id="diag-log-div"><label><input id="diag-log-check" type="checkbox" onClick="procLogCheck(this)" style="display:inline-block"/>Diagnostic Logging</label></div>
+        <div id="diagnostic-log" style="display:inline-block"></div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+@(title: String) <!--TO DO: Need to fix this-->
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>THIS WILL BE A QUIZ TO TAKE, NOT CREATE -- EVENTUALLY!</title>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/quiz-gen-main.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="http://www.json.org/json2.js"></script>
+</head>
+
+<body onload="initCkBx()">
+	<div id="main-container">
+    	<div id="header-panel">
+        	<div id="app-banner">
+                <h1 id="app-name">Cloze Quiz Creator</h1>
+                <div id="quiz-title-div">
+                    <label id="quiz-title-label" style="display:inline-block" style="float:left">Quiz Title:</label>
+                    <input id="quiz-title" style="display:inline-block type="text" style="float:left" size="40"/>
+            	</div>
+            </div> <!-- app-banner -->
+            <div id="admin-panel">
+                <label><input type="checkbox" name="CheckboxGroup1" value="checkbox" id="allowRetriesCheckbox" onClick="procAllowRetry(this)"/>
+                    Allow Retries</label>
+                <br />
+                <label><input type="checkbox" name="CheckboxGroup1" value="checkbox" id="DandDCheckbox" onClick="procDragDropCheck(this)"/>
+                    Allow Drag and Drop</label>
+                <br />
+            </div><!--admin-panel-->
+            <p id="editingMessage" class="user-message" draggable='false' style="display: inline-block">
+            	Type or paste text for your cloze quiz (a song lyric, or any kind of text). You can break text into
+                individual lines or paragraphs using the return key. Don't worry about creating cloze questions at this point.</p>
+            <p id="savedMessage" class="user-message" draggable='false' style="display: none">
+                Double-click any word to create a blank cloze field. Click the 'Save
+                Quiz' button to save quiz. "Click the 'Edit Text' button if you want
+                to modify the quiz text. Type answers and Click the 'Check Answers' button to see your results.</p>
+            <p id="score" class="user-message" style="display: none"></p>
+        </div><!--header-panel-->
+        <div id="QandA-area">
+        	<textarea id="cloze-text-edit" cols="80" rows="25" draggable='false' style="display: inline-block"></textarea>
+            <div id="cloze-text-display" style="display:none"></div>
+            <div id="draggables-panel">
+                <ul id="drag-ans-list" draggable='false' style="display:none"></ul>
+                <input type="button" id="edit-draggables-button" class="draggables-buttons" value="Edit/Add Cloze Choices" onClick="editdraggables()" style="display:none"/>
+                <input type="button" id="save-draggables-button" class="draggables-buttons" value="Save Cloze Choices" onClick="savedraggables()" style="display:none"/>
+                <input type="button" id="shuffle-draggables-button" class="draggables-buttons" value="Shuffle Choices" onClick="shuffleChoices()" style="display:none"/>
+        	</div> <!-- draggables-panel -->
+        </div><!--QandA-area-->
+		<div id="text-buttons">
+			<input type="button" id="save-text-button" value="Save Text" onClick="saveText()" style="display: inline-block" /> 
+			<input type="button" id="edit-text-button" value="Edit Text" onClick="editText()" style="display: none" /> 
+			<input type="button" id="save-quiz-button" value="Save Quiz" onClick="saveQuiz()" style="display: none" /> 
+			<input type="button" id="edit-cloze-button" value="Edit Quiz" onClick="editClozeEntries()" style="display: none" />
+			<input type="button" id="check-answers-button" value="Check Answers" onClick="checkAnswers()" style="display: none" />
+		</div>
+	</div><!--main-container-->
+    <div id="log-panel">
+        <div id="diag-log-div"><label><input id="diag-log-check" type="checkbox" onClick="procLogCheck(this)" style="display:inline-block"/>Diagnostic Logging</label></div>
+        <div id="diagnostic-log" style="display:inline-block"></div>
+    </div>
+
+</body>
+
+</html>

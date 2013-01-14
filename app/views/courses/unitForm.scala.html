@@ -1,0 +1,43 @@
+@(unitForm: Form[Unit])
+
+@import helper._
+@import helper.twitterBootstrap._
+    
+@if(unitForm.hasErrors) {
+    <div class="alert-message error">
+		<p><strong>Oops</strong> Please fix all errors</p>
+    </div>
+}
+
+<!-- Ajax add Unit form -->
+<script type="text/javascript" src="@routes.Assets.at("javascripts/addForms.js")"></script>
+
+<form id="newUnitForm">
+	<div class="unitMeta">
+		<label for="title">Unit title</label>
+		<input type='text' id="title" name="title" class="textInput" tabindex=1/>
+
+		<label for="schedule">Unit Schedule</label>
+		<input type="text" id="schedule" name="schedule" class="textInput" tabindex=2/>
+
+		<div class="submit">
+			<input id="newUnitSubmitBtn" type="button" class="btn primary" name="submit" value="Create">
+			<a href="@routes.Application.index" class="btn">Cancel</a>
+		</div>
+	</div>
+
+	<div class="unitDesc">
+		<label for="descrip">Unit description</label>
+		<textarea id="descrip" name="descrip" class="textInput" tabindex=3/>
+	</div>
+</form>
+
+
+
+
+
+
+
+
+
+    

@@ -1,0 +1,236 @@
+// -----------------------------------
+// MAIN LAYOUT
+// -----------------------------------
+// author: mda@zenexity.com - 2011
+// -----------------------------------
+
+body {
+    & > header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+       	//height: @headerHeight;
+    }
+    & > nav {
+        position: absolute;
+        top: @headerHeight;
+        left: 0;
+        width: @drawerWidth;
+        bottom: 0;
+        box-sizing: border-box;
+    }
+    & > section {
+        position: absolute;
+        top: @headerHeight;
+        left: @drawerWidth;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+#dashboard > header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: @breadcrumbHeight;
+}
+
+#dashboard > article {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    overflow: auto;
+}
+// ---------------------
+// AQUME
+// ---------------------
+
+#unitList {
+	margin-top:-10px;
+}
+
+#unitList li.unit {
+	border-bottom: 1px;
+	border-bottom-color:#999;
+	border-bottom-style:solid;
+	padding-bottom:12px;
+	padding-top:8px;
+	margin-bottom:5px;
+	display:inline-block;
+	clear:both;
+
+	width:100%;
+	position:relative;
+}
+
+#unitList dl .unitTitle {
+	font-size:16px;
+	font-weight:bold;
+	color: rgb(42, 94, 136);
+}
+
+#unitList li dl.unitAct {
+	width:20%;
+	float:left;
+	margin-right:5px;
+}
+
+#unitList li dl.unitDescInst {
+	width: 50%;
+	float: left;
+	margin-right:3px;
+}
+
+#unitList li dl.unitCommun {
+	width: 25%;
+	float: right;
+}
+
+#unitList li dt.activities {
+	font-weight: bold;
+	margin-top: 10px;
+	color: #347bb9;
+}
+
+#unitList li div.unitSizeToggle {
+	position:absolute;
+	bottom:2px;
+}
+
+#unitList li button.expand {
+	display:none;
+	background: url(/assets/images/icons/expand.png) 1px 1px no-repeat;
+	padding-left:6px;
+	padding-left: 12px;
+	border: none;
+	color: 717690;
+}
+
+#unitList li button.collapse {
+	display:none;
+	background: url(/assets/images/icons/colapse.png) 1px 1px no-repeat;
+	padding-left: 12px;
+	border: none;
+	color: 717690;
+}
+
+#unitList li dl.unitCommun textarea {
+	width: 100%;
+	height:auto;
+	background-color:#FBFBEB;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size:10px;
+}
+
+#unitFormCont {
+	display: inline-block;
+	overflow: auto;
+	width: 100%;
+	margin-bottom:60px;
+	display:none;
+}
+
+#unitFormCont form#newUnitForm .unitMeta {
+	float: left;
+	width: 33%;
+	overflow: auto;
+}
+
+#unitFormCont form#newUnitForm label {
+	float: left;
+	width: 100%;
+	font-size:12px;
+	margin-top:2px;
+}
+
+#unitFormCont form#newUnitForm .textInput {
+	float: left;
+	width: 100%;
+}
+
+#unitFormCont form#newUnitForm .unitDesc {
+	float: right;
+	width: 65%;
+	padding-left: 5px;
+}
+
+#unitFormCont form #descrip {
+	min-height: 60px;
+}
+
+#unitFormCont form#newUnitForm .submit {
+	clear: both;
+	padding-top: 3px;
+}
+
+#newUnitBtn {
+	margin-bottom:60px;
+}
+
+/* Activities drop down menu*/ /* TO DO: change names */
+
+.activityMenu { 
+	margin:0; 
+	padding:0; 
+	display:inline-block;
+} 
+
+.activityMenu li { 
+	list-style:none; 
+	float:left; 
+	font-size:11px; // Arial, Helvetica, sans-serif 
+	color:#111;
+	margin-top:8px;
+} 
+
+.activityMenu li a:link, .activityMenu li a:visited { 
+	display:block; 
+	text-decoration:none; 
+	background-color:#3e95e1; 
+	padding: 0.25em .5em; 
+	margin:0; 
+	//border-right: 
+	//1px solid #fff; 
+	color:#fff; 
+} 
+
+.activityMenu li a:hover { 
+	background-color:#0CF; 
+} 
+
+/* Activity sub menu */ 
+
+.activityMenu li ul { 
+	position:absolute; 
+	visibility:hidden; 
+	border-top:1px solid #fff; 
+	margin:0; 
+	padding:0; 
+} 
+
+.activityMenu li ul li { 
+	display:inline; 
+	float:none; 
+} 
+
+.activityMenu li ul li a:link, .activityMenu li ul li a:visited { 
+	background-color:#09F; 
+	width:auto; 
+} 
+
+.activityMenu li ul li a:hover { 
+	background-color:#0CF; 
+}
+
+
+
+
+
+
+
+

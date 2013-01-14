@@ -1,0 +1,14 @@
+@(course: Course)
+
+<li data-project="@course.id">
+    <a class="name" href="@routes.Courses.show(course.id.get)">@course.title</a>
+	<dl>
+        <dd>
+            @course.courseNum Section @course.section
+        </dd>
+		<dd>
+            @course.semester @course.year
+        </dd>
+    </dl>
+    <span class="loader">Loading</span>
+</li>

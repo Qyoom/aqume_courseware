@@ -1,0 +1,53 @@
+@(courses: Seq[Course], user: User)(body: Html)
+
+<html>
+    <head>
+        <title>Aqume Courseware (main.html)</title>
+		<!-- TO DO: Need to inventory these js assets and adapt and cull Less styles and JS artifacts. -->
+		<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+		<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/aqume.css")">
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.7.1.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-play-1.7.1.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/underscore-min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/backbone-min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/main.js")"></script>
+		<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.form.js")"></script>
+     	<script type="text/javascript" src="@routes.Application.javascriptRoutes"></script>
+    </head>
+
+    <body>
+        <header>
+            <a href="@routes.Application.index" id="logo"><span>Aqume </span>Courseware</a>
+            <dl id="user">
+                <dt>@user.firstName @user.lastName <span> (@user.email)</span></dt>
+                <dd>
+                    <a href="@routes.Application.logout()">Logout</a>
+                </dd>
+            </dl>
+        </header>
+
+        <nav>
+			@{user.role match {
+			  	case "INSTRUCTOR" => <button id="newGroup">New course</button> //TO DO: Change name of this id to "newCourse" here and in CSS
+			  	case "STUDENT" => None
+			}}
+            <h4 class="dashboard">Your Courses</h4>
+            <ul id="projects"> <!-- TO DO: change this CSS to units -->
+				@courses.map { case course =>
+					@views.html.courses.courseNavItem(course)
+        		}
+            </ul>
+        </nav>
+
+        <section id="dashboard"> <!-- This is where templates are passed in from the body tag (above) directed to -->
+            @body
+        </section>
+
+		<!-- Ajax add Unit form -->
+		<script type="text/javascript" src="@routes.Assets.at("javascripts/addForms.js")"></script>
+
+
+    </body>
+</html>
+
