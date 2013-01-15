@@ -9,9 +9,9 @@ insert into role (role) values ('ADMIN');
 insert into role (role) values ('INSTRUCTOR');
 insert into role (role) values ('STUDENT');
 
-insert into user (user_name, first_name, last_name, password, role_id, email) values ('Homer', 'Richard', 'Walker', 'Swordfish', 2, 'richard@aqume.com');
-insert into user (user_name, first_name, last_name, password, role_id, email) values ('MJ', 'Melissa', 'Jones', 'Secret', 2, 'Melissa@sample.edu');
-insert into user (user_name, first_name, last_name, password, role_id, email) values ('Yubba', 'Yuri', 'Abramov', 'Secret', 3, 'Yuri@sample.com');
+insert into user (user_name, first_name, last_name, password, role, email) values ('Homer', 'Richard', 'Walker', 'Swordfish', 'ADMIN', 'richard@aqume.com');
+insert into user (user_name, first_name, last_name, password, role, email) values ('MJ', 'Melissa', 'Jones', 'Secret', 'INSTRUCTOR', 'Melissa@sample.edu');
+insert into user (user_name, first_name, last_name, password, role, email) values ('Yubba', 'Yuri', 'Abramov', 'Secret', 'STUDENT', 'Yuri@sample.com');
 
 insert into course (course_num, title, section, semester, year) values ('ESL301', 'Workplace English', '1', 'Spring', '2013');
 insert into course (course_num, title, section, semester, year) values ('ESL301', 'Workplace English', '2', 'Spring', '2013');

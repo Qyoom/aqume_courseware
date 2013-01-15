@@ -58,12 +58,11 @@ CREATE TABLE user (
 	first_name VARCHAR(45),
 	last_name VARCHAR(45),
 	password VARCHAR(20) NOT NULL,
-	role_id INT NOT NULL,
+	role VARCHAR(20) NOT NULL,
 	email VARCHAR(60),
     created TIMESTAMP,
     modified TIMESTAMP,
-	PRIMARY KEY (id),
-	FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE
+	PRIMARY KEY (id)
 );
 CREATE TABLE course (
     id INT NOT NULL AUTO_INCREMENT,

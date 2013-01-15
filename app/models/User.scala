@@ -30,16 +30,9 @@ object User {
 	    get[String]("user.last_name") ~
 	    get[String]("user.email") ~
 	    get[String]("user.password") ~
-	    get[Int]("user.role_id") map {
-			case id~userName~firstName~lastName~email~password~roleId => 
-			  	User(id, userName, firstName, lastName, email, password, 
-			  	    roleId match {
-		  	    	  	case 1 => "ADMIN"
-		  	    	  	case 2 => "INSTRUCTOR"
-		  	    	  	case 3 => "STUDENT"
-		  	    	  	case _ => "STUDENT"
-			  	    }
-			  	)
+	    get[String]("user.role") map {
+			case id~userName~firstName~lastName~email~password~role => 
+			  	User(id, userName, firstName, lastName, email, password, role)
 	    }
 	}
   
@@ -87,16 +80,10 @@ object User {
 	 */
 	def create(user: User): Pk[Long] = {
 	    DB.withConnection { implicit connection =>
-	      	val roleId = user.role match {
-			  	case "ADMIN" => 1
-  			  	case "INSTRUCTOR" => 2
-  			  	case "STUDENT" => 3
-  			  	case _ => 3
-			}
 	      	SQL(
 	      		"""
-      			insert into user (user_name, first_name, last_name, email, password, role_id) values (
-      				{userName}, {firstName}, {lastName}, {email}, {password}, {roleId}
+      			insert into user (user_name, first_name, last_name, email, password, role) values (
+      				{userName}, {firstName}, {lastName}, {email}, {password}, {role}
       			)
 	      		"""
       		).on(
@@ -105,7 +92,7 @@ object User {
       			'lastName  -> user.lastName,
       			'email 	   -> user.email,
       			'password  -> user.password,
-           		'roleId    -> roleId
+           		'role    -> user.role
       		).executeInsert()
     	} match {
 	        case Some(long) => new Id[Long](long) // The Primary Key
