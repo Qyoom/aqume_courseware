@@ -1,4 +1,4 @@
-/*!
+/**!
  * jQuery Form Plugin
  * version: 3.24 (26-DEC-2012)
  * @requires jQuery v1.5 or later
@@ -9,11 +9,11 @@
  *    http://malsup.github.com/mit-license.txt
  *    http://malsup.github.com/gpl-license-v2.txt
  */
-/*global ActiveXObject alert */
+/**global ActiveXObject alert */
 ;(function($) {
 "use strict";
 
-/*
+/**
     Usage Note:
     -----------
     Do not use both ajaxSubmit and ajaxForm on the same form.  These
