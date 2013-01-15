@@ -2,14 +2,16 @@
  
 # --- !Ups
 
+SET sql_mode = 'NO_ZERO_DATE';
+
 CREATE TABLE quiz (
     id INT NOT NULL AUTO_INCREMENT,
     title varchar(60),
     retries INT,
     drag BOOLEAN,
     instructions TEXT,
-    created TIMESTAMP,
-    modified TIMESTAMP,
+    created TIMESTAMP NULL,
+    modified TIMESTAMP NULL,
     record_link TEXT,
     PRIMARY KEY (id)
 );
@@ -60,8 +62,8 @@ CREATE TABLE user (
 	password VARCHAR(20) NOT NULL,
 	role VARCHAR(20) NOT NULL,
 	email VARCHAR(60),
-    created TIMESTAMP,
-    modified TIMESTAMP,
+    created TIMESTAMP NULL,
+    modified TIMESTAMP NULL,
 	PRIMARY KEY (id)
 );
 CREATE TABLE course (
@@ -71,8 +73,8 @@ CREATE TABLE course (
 	section VARCHAR(20),
 	semester VARCHAR(20),
 	year VARCHAR(4),
-    created TIMESTAMP,
-    modified TIMESTAMP,
+    created TIMESTAMP NULL,
+    modified TIMESTAMP NULL,
 	PRIMARY KEY (id)
 );
 CREATE TABLE quiz_course (
