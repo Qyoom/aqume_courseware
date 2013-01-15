@@ -22,12 +22,6 @@ insert into course (course_num, title, section, semester, year) values ('MAND101
 insert into course (course_num, title, section, semester, year) values ('SPAN101', 'Elementary Spanish', '2', 'Spring', '2013');
 insert into course (course_num, title, section, semester, year) values ('ESL401', 'English Grammar', '1', 'Spring', '2013');
 
-insert into user_course (user_id, course_id) values (2, 2);
-insert into user_course (user_id, course_id) values (2, 8);
-insert into user_course (user_id, course_id) values (1, 4);
-insert into user_course (user_id, course_id) values (3, 8);
-insert into user_course (user_id, course_id) values (3, 7);
-
 # --- !Downs
 
 delete from user_course;
