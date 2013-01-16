@@ -195,7 +195,7 @@ function checkAnswers() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
+	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
 		function(data) {
 			logDiagnostic("checkAnswers - data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
@@ -450,7 +450,7 @@ function saveQuiz() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
+	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
 		function(data) {
 			logDiagnostic("Data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
