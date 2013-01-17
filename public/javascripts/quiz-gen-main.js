@@ -162,8 +162,7 @@ function checkAnswers() {
 	// Json object for post
 	var takerAnss = []; // accumulated user answers
 	var attempt_json = {
-		"quizId"	: quizContent.quizId, // TO DO: Should a cookie be involved???
-		"userName"	: "DEV_TEST_USER", // TO DO: AUTHENTICATION to come.
+		"quizId"	: quizContent.quizId,
 		"takerAnss"	: takerAnss
 	};
 
@@ -195,6 +194,7 @@ function checkAnswers() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
+	//var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
 	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
 		function(data) {
 			logDiagnostic("checkAnswers - data returned: " + data);
@@ -440,8 +440,8 @@ function saveQuiz() {
 	}
 	logDiagnostic("saveQuiz - draggables: " + draggables);
 	
-	/* Ajax */
-	/* TO DO: Play request.body.asJson requires contentType: application/json. 
+	/** Ajax */
+	/** TO DO: Play request.body.asJson requires contentType: application/json. 
 	 * It seems this is a global setting to all $.get nd $.post requests will have this type. 
 	 * See: http://stackoverflow.com/questions/2845459/jquery-how-to-make-post-use-contenttype-application-json 
 	 */
@@ -450,13 +450,13 @@ function saveQuiz() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
+	//var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
 	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
 		function(data) {
 			logDiagnostic("Data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
 			responseSavedQuiz(data); 
 		})
-		// Not sure what use to make of these, if any at this point. The response it pretty fast with this app so far...
 		.success(function(data) { logDiagnostic("second success: " + data); })
 		.error(function(data) { logDiagnostic("error: " + data); })
 		.complete(function(data) { logDiagnostic("complete: " + data); });
