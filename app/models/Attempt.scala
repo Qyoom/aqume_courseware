@@ -12,7 +12,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 
 case class Attempt(
-    userId:	  	Int,
+    userId:	  	Long,
     quizId:   	Long,
     attemptNum: Int,
     score: 	  	String,
@@ -46,7 +46,7 @@ object Attempt {
 	}
 	
 	// Read - attempts specific to taker and quiz
-	def attempts(userId: Int, quizId: Long): List[Attempt] = DB.withConnection { implicit c =>
+	def attempts(userId: Long, quizId: Long): List[Attempt] = DB.withConnection { implicit c =>
 	    SQL("select * from quiz_attempt where user_id = {userId} and quiz_id = {quizId}").on(
 	        'userId -> userId,
 	        'quizId -> quizId
@@ -69,7 +69,7 @@ object Attempt {
 	}
 
 	// Delete
-	def delete(userId: Int, quizId: Int) {
+	def delete(userId: Long, quizId: Int) {
 	    DB.withConnection { implicit c =>
 	    	SQL("delete from quiz_attempt").on(
 	    	    'user_id -> {userId}, 
@@ -79,7 +79,7 @@ object Attempt {
 	}
 
 	val attempt = {
-		get[Int]("user_id") ~ get[Long]("quiz_id") ~ get[Int]("attemptNum") ~ 
+		get[Long]("user_id") ~ get[Long]("quiz_id") ~ get[Int]("attemptNum") ~ 
 			get[String]("score") ~ get[String]("taker_ans") map {
         		case user_id ~ quiz_id ~ attemptNum ~ score ~ taker_ans => 
         		   Attempt(user_id, quiz_id, attemptNum, score, taker_ans)

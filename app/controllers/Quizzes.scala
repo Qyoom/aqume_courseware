@@ -12,7 +12,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json._
 import com.codahale.jerkson.Json._
 
-object Quizzes extends Controller{
+object Quizzes extends Controller with Secured{
 
 	/*def quizzes = Action {
 		Ok(views.html.quizzes(Quiz.all()))
@@ -72,7 +72,6 @@ object Quizzes extends Controller{
 	 * 
 	 * TO DO: Need Validation, Transaction, Authorization
   	 * Validation example:
-  	 * assertThat(contentAsString(result)).contains("HELLO, WORLD");
   	 * See: https://github.com/jamesward/play2torial/blob/master/JAVA.md#get-tasks-as-json
   	 */
 	def saveQuiz = Action { implicit request =>
@@ -157,11 +156,13 @@ object Quizzes extends Controller{
 	/*
 	 * Student/Taker submits answers--constitutes an attempt. Score and error indication (if any) returned.
 	 */
-	def submit = Action { implicit request =>
+	def submit = IsAuthenticated { email => implicit request =>
 	  	println("Action: attempt - TOP")
 	  	
 		request.body.asJson.map { json =>
-			val userName = (json \ "userName").as[String] // TO DO: This needs to be handled through proper AUTHORIZATION
+		  User.findByEmail(email).map { user =>
+			val userName = user.userName
+		  
 		  	val quizId = (json \ "quizId").as[Long]
 			val quiz = Quiz.single(quizId);
 			//val questions = QuestionP.all(quizId)
@@ -170,7 +171,7 @@ object Quizzes extends Controller{
 			println("attempt - userName: " + userName)
 			println("attempt - quizId: " + quizId)
 			// TO DO: Need to implement AUTHORIZATION in order to associate takers (and admins) to quizzes.
-			val userId = 2 // TO DO: TEMP FAKE!! NEEDS AUTH LOOK UP (I'm guessing...)
+			val userId = user.id.get
 			
 			// Values for fields 'attemptNum', 'score', and 'date' are calculated.
 			
@@ -254,7 +255,9 @@ object Quizzes extends Controller{
 			Attempt.create(attempt)
 			
 			// send Json Response
+		  
 			Ok(checkAnsResult)
+		  }.getOrElse {BadRequest("User not found")}
 	  	}.getOrElse {
 			BadRequest("Expecting Json data")
 		} // End - request.body.asJson.map
