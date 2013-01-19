@@ -36,6 +36,7 @@
 	width: 100%;
 	margin-top:15px;
 	overflow:hidden;
+	position:relative;
 }
 
 .admin-panel {
@@ -82,6 +83,7 @@
 	overflow:auto;
 	float:left;
 	position:relative;
+	height:135px;
 }
 
 #app-name {
@@ -136,8 +138,9 @@
 	background-image:url(../images/3.png);
 }
 
-body {
-		
+#score {
+	background-image:url(../images/check-mark.png);
+	background-position:4px -5px;
 }
 
 h1 {
@@ -175,6 +178,11 @@ label {
 	background-repeat:no-repeat;
 	padding-left:50px;
 	background-position:4px 4px;
+	position:absolute;
+	left:0;
+	right:0;
+	top:58px;
+	min-height:40px;
 }
 
 .incorrectStyle {
