@@ -194,8 +194,8 @@ function checkAnswers() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	//var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
-	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
+	var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
+	//var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
 		function(data) {
 			logDiagnostic("checkAnswers - data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
@@ -237,8 +237,10 @@ function responseCheckAnswers(attemptRespJsonStr) {
 		}
 	}); // End - each(attemptRespJson.results
 	
-	//var score = attemptRespJson.score;
-	logDiagnostic("=======> score: " + attemptRespJson.score);
+	var score = attemptRespJson.score;
+	logDiagnostic("=======> score: " + score);
+	$('#savedQuizMessage').hide();
+	$('#score').text("You scored " + score).show();
 } // End - responseCheckAnswers
  
 // TO DO: NIX
@@ -450,8 +452,8 @@ function saveQuiz() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	//var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
-	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
+	var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
+	//var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
 		function(data) {
 			logDiagnostic("Data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
@@ -637,30 +639,26 @@ function procAllowRetry(checkbox) {
 }
 
 function procDragDropCheck(checkbox) {
+	logDiagnostic("quiz-gen-main.procDragDropCheck - TOP");
 	if(checkbox.checked) {
+		logDiagnostic("quiz-gen-main.procDragDropCheck - checked");
 		allowDragAndDrop="true";
-		choiceList = document.getElementById("drag-ans-list");
-		//alert("procDragDropCheck - checked - choiceList.border: " + choiceList.border);
-		if(choiceList.hasChildNodes()) {
-			choiceList.style.display='block';
-			document.getElementById("edit-draggables-button").style.display='block';
-			if(choiceList.childNodes.length > 1) {
-				document.getElementById("shuffle-draggables-button").style.display='block';
+		logDiagnostic("draggables-panel.hasChildNodes?: " + $('#draggables-panel').children().length > 0);
+		if($('#draggables-panel').children().length > 0) {
+			$('#draggables-panel').show();
+			$('#edit-draggables-button').show();
+			if($('#drag-ans-list').children().length > 1) {
+				$('#shuffle-draggables-button').show();
 			}
 		}
 	}
 	else { // checkbox unchecked
-		//alert("procDragDropCheck - unchecked[top]");
+		logDiagnostic("quiz-gen-main.procDragDropCheck - unchecked");
 		allowDragAndDrop="false";
 		createClozeAllowed = true; // Since we are not allowing editing, we need to be sure we can create cloze inputs
-		choiceList = document.getElementById("drag-ans-list");
-		choiceList.style.display='none';
-		choiceList.style.border="2px solid #EDBFAC";
-		choiceList.contentEditable='false';
-		document.getElementById("shuffle-draggables-button").style.display='none';
-		document.getElementById("save-draggables-button").style.display='none';
-		//alert("procDragDropCheck - unchecked[end] - choiceList.border: " + choiceList.border);
-		document.getElementById("edit-draggables-button").style.display='none';
+		$('#drag-ans-list').border="2px solid #EDBFAC";
+		$('#drag-ans-list').contentEditable='false';
+		$('#draggables-panel').hide();
 	}
 } <!-- procDragDropCheck -->
 
@@ -788,7 +786,7 @@ function responseSavedQuiz(quizJsonStr) {
 	document.getElementById("save-draggables-button").style.display = 'none';
 	document.getElementById("check-answers-button").style.display = 'block';
 	document.getElementById("savedTextMessage").style.display = 'none';
-	document.getElementById("savedQuizMessage").style.display = 'block';
+	document.getElementById("savedQuizMessage").style.display = 'inline-block';
 	document.getElementById("app-name").innerHTML = "Quiz Wiz"
 	document.title = "Wiz Quiz";
 } // End - responseSavedQuiz

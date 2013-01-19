@@ -21,6 +21,15 @@
 	float:right;	
 }
 
+#draggables-heading {
+    font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: -12px;
+    text-align: center;
+    color: rgb(102, 0, 51);
+}
+
 #drag-ans-list {
 	margin-top: 15px;
 	background-color: #EDBFAC;

@@ -31,8 +31,7 @@
                 </div><!--admin-panel-->
             </div> <!-- app-banner -->
             
-            <div id="taker-admin-panel" class="admin-panel" style="display: none">
-            </div>
+            <div id="taker-admin-panel" class="admin-panel" style="display: none"></div>
             <p id="enterTextMessage" class="user-message" draggable='false' style="display: inline-block">
             	Type or paste text for your cloze quiz (a song lyric, or any kind of text). You can break text into
                 individual lines or paragraphs using the return key. Save the text when you are finished.</p>
@@ -50,6 +49,7 @@
             <div id="cloze-questions-create" style="display:none"></div>
             <div id="cloze-questions-present" style="display:none"></div>
             <div id="draggables-panel">
+            	<h3 id="draggables-heading">Drag and Drop Choices</h3>
                 <ul id="drag-ans-list" draggable='false' style="display:none"></ul>
                 <input type="button" id="edit-draggables-button" class="draggables-buttons" value="Edit/Add Cloze Choices" onClick="editdraggables()" style="display:none"/>
                 <input type="button" id="save-draggables-button" class="draggables-buttons" value="Save Cloze Choices" onClick="savedraggables()" style="display:none"/>
