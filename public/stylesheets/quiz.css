@@ -18,7 +18,8 @@
 }
 
 #draggables-panel {
-	float:right;	
+	float:right;
+	display:none;	
 }
 
 #draggables-heading {
