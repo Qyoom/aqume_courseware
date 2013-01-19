@@ -21,15 +21,16 @@
                     <input id="quiz-title-create" style="display:inline-block type="text" style="float:left" size="40"/>
                     <label id="quiz-title-display" style="display:inline-block" style="float:left"></label>
             	</div>
+                <div id="creator-admin-panel" class="admin-panel">
+                    <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="allowRetriesCheckbox" onClick="procAllowRetry(this)"/>
+                        Allow Retries</label>
+                    <br />
+                    <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="DandDCheckbox" onClick="procDragDropCheck(this)"/>
+                        Allow Drag and Drop</label>
+                    <br />
+                </div><!--admin-panel-->
             </div> <!-- app-banner -->
-            <div id="creator-admin-panel" class="admin-panel">
-                <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="allowRetriesCheckbox" onClick="procAllowRetry(this)"/>
-                    Allow Retries</label>
-                <br />
-                <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="DandDCheckbox" onClick="procDragDropCheck(this)"/>
-                    Allow Drag and Drop</label>
-                <br />
-            </div><!--admin-panel-->
+            
             <div id="taker-admin-panel" class="admin-panel" style="display: none">
             </div>
             <p id="enterTextMessage" class="user-message" draggable='false' style="display: inline-block">
@@ -43,7 +44,6 @@
 				Your quiz has been saved. Now you can try it yourself. Type or drag answers to empty fields and then click 
 				the 'Check Answers' button to see your results.</p>
             <p id="score" class="user-message" style="display: none"></p>
-			<div id="numbers"><div>
         </div><!--header-panel-->
         <div id="QandA-area">
         	<textarea id="cloze-text-edit" cols="80" rows="25" draggable='false' style="display: inline-block"></textarea>

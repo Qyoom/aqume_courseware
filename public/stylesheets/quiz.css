@@ -39,13 +39,14 @@
 }
 
 .admin-panel {
-	float: right;
 	background-color: #CC9;
 	padding-right: 5px;
 	padding-top: 4px;
 	padding-bottom: 3px;
 	overflow:auto;
-	margin-top:4px;
+	position:absolute;
+	top:0;
+	right:0;
 }
 
 #diagnostic-log {
@@ -76,10 +77,11 @@
 }
 
 #app-banner {
-	width: 70%;
+	width: 100%;
 	display:inline-block;
 	overflow:auto;
 	float:left;
+	position:relative;
 }
 
 #app-name {
@@ -98,6 +100,7 @@
 	float:left;
 	height:auto;
 	width:80%;
+	overflow:hidden;
 }
 
 #quiz-title-display {
@@ -116,22 +119,21 @@
 }
 
 #quiz-title-div {
-	overflow:auto;
+	overflow:hidden;
 	clear:both;
+	width:70%;
 }
 
 #enterTextMessage {
 	background-image:url(../images/1.png);
-	background-repeat:no-repeat;
-	padding-left:50px;
-	background-position:4px 4px;
 }
 
 #savedTextMessage {
 	background-image:url(../images/2.png);
-	background-repeat:no-repeat;
-	padding-left:50px;
-	background-position:4px 4px;
+}
+
+#savedQuizMessage {
+	background-image:url(../images/3.png);
 }
 
 body {
@@ -167,9 +169,12 @@ label {
 	font-weight: normal;
 	font-variant: normal;
 	text-transform: none;
-	background-color: #FFC;
 	padding: 5px;
-	width: 100%;
+	display:inline-block;
+	background-color: #FFC;
+	background-repeat:no-repeat;
+	padding-left:50px;
+	background-position:4px 4px;
 }
 
 .incorrectStyle {
