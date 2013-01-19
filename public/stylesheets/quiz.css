@@ -28,7 +28,14 @@
 	border-width: 2px;
 	border-style: solid;
 	padding: 12px;
-	/*cursor: move;*/
+	border-radius:5px;
+	-moz-border-radius:5px; /* Old Firefox */
+	
+	-moz-box-shadow: 5px 5px 3px #888;
+	-webkit-box-shadow: 5px 5px 3px #888;
+	box-shadow: 5px 5px 3px #888;
+	
+	width:150px;
 }
 
 #header-panel {
@@ -48,6 +55,8 @@
 	position:absolute;
 	top:0;
 	right:0;
+	border-radius:5px;
+	-moz-border-radius:5px; /* Old Firefox */
 }
 
 #diagnostic-log {
@@ -143,6 +152,10 @@
 	background-position:4px -5px;
 }
 
+body {
+	background-color:rgb(199,209,217)
+}
+
 h1 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 24px;
@@ -183,6 +196,8 @@ label {
 	right:0;
 	top:58px;
 	min-height:40px;
+	border-radius:5px;
+	-moz-border-radius:5px; /* Old Firefox */
 }
 
 .incorrectStyle {
