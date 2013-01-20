@@ -527,7 +527,7 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 	$('#drag-ans-list').append(draggable);
 		
 	if(allowDragAndDrop=='true') {
-		choiceList.style.display = 'block';
+		$('#draggables-panel').show();
 				
 		// Edit draggables button
 		editDraggablesButton = document.getElementById('edit-draggables-button');
