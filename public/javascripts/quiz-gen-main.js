@@ -523,7 +523,8 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 	draggable.setAttribute("class", "draggable");
 	
 	choiceList = document.getElementById("drag-ans-list");
-	choiceList.appendChild(draggable);
+	//choiceList.appendChild(draggable);
+	$('#drag-ans-list').append(draggable);
 		
 	if(allowDragAndDrop=='true') {
 		choiceList.style.display = 'block';
