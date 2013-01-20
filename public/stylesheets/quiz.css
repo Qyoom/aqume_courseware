@@ -55,19 +55,6 @@
 	position:relative;
 }
 
-.admin-panel {
-	background-color: #CC9;
-	padding-right: 5px;
-	padding-top: 4px;
-	padding-bottom: 3px;
-	overflow:auto;
-	position:absolute;
-	top:0;
-	right:0;
-	border-radius:5px;
-	-moz-border-radius:5px; /* Old Firefox */
-}
-
 #diagnostic-log {
 	border-width: 1px;
 	border-color: #000;
@@ -161,6 +148,11 @@
 	background-position:4px -5px;
 }
 
+#cloze-text-edit {
+	padding-left:12px;
+	padding-top:12px;
+}
+
 body {
 	background-color:rgb(199,209,217)
 }
@@ -185,6 +177,19 @@ label {
 	font-weight: normal;
 	font-variant: normal;
 	text-transform: none;
+}
+
+.admin-panel {
+	background-color: #CC9;
+	padding-right: 5px;
+	padding-top: 4px;
+	padding-bottom: 3px;
+	overflow:auto;
+	position:absolute;
+	top:0;
+	right:0;
+	border-radius:5px;
+	-moz-border-radius:5px; /* Old Firefox */
 }
 
 .user-message {
