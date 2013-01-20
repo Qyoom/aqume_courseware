@@ -643,8 +643,8 @@ function procDragDropCheck(checkbox) {
 	if(checkbox.checked) {
 		logDiagnostic("quiz-gen-main.procDragDropCheck - checked");
 		allowDragAndDrop="true";
-		logDiagnostic("draggables-panel.hasChildNodes?: " + $('#draggables-panel').children().length > 0);
-		if($('#draggables-panel').children().length > 0) {
+		logDiagnostic("quiz-gen-main.procDragDropCheck - draggables-panel.children.length: " + ($('#drag-ans-list').children().length));
+		if($('#drag-ans-list').children().length > 0) {
 			$('#draggables-panel').show();
 			$('#edit-draggables-button').show();
 			if($('#drag-ans-list').children().length > 1) {
