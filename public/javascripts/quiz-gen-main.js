@@ -55,8 +55,7 @@ var draggables   = [];
 function saveText() {
 	logDiagnostic("# saveText - top");
 	createClozeAllowed = true;
-	clozeEditTextArea = document.getElementById("cloze-text-edit");
-	quizText = clozeEditTextArea.value;
+	quizText = $("#cloze-text-edit").val();
 	
 	// Process line breaks as arrays
 	quizTextLineBreaksArray = quizText.split(new RegExp("\\n", "g"));
@@ -66,15 +65,11 @@ function saveText() {
 	clozeEditTextArea.style.display = 'none';
 	clozeQuestionsCreateArea.style.display = 'inline-block';
 
-	saveTextButton = document.getElementById("save-text-button");
-	editTextButton = document.getElementById("edit-text-button");
-	saveTextButton.style.display = 'none';
-	editTextButton.style.display = 'block';
+	$("#save-text-button").hide();
+	$("#edit-text-button").show();
 
-	enterTextMessage = document.getElementById("enterTextMessage");
-	savedTextMessage = document.getElementById("savedTextMessage");
-	enterTextMessage.style.display = 'none';
-	savedTextMessage.style.display = 'inline-block';
+	$("#enterTextMessage").hide();
+	$("#savedTextMessage").show();
 	
 	// Resets for new quiz
 	attemptNum = 0;
@@ -194,8 +189,8 @@ function checkAnswers() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	//var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
-	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
+	var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
+	//var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
 		function(data) {
 			logDiagnostic("checkAnswers - data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
@@ -290,7 +285,7 @@ function checkAnswers_DEPRECATED() {
 		
 	} // End inputs loop
 	attemptNum++; // Keep track of number of attempts
-	scoreMessage = document.getElementById("score");
+	scoreMessage = $("#score");
 	scoreMessage.innerHTML = "Your score: " + numRight + "\/" + numQuestions;
 	scoreMessage.style.display = 'inline-block';
 	savedTextMessage.style.display = 'none';
@@ -299,15 +294,15 @@ function checkAnswers_DEPRECATED() {
 		checkAnswersButton.style.display = 'none';
 		if(editDraggablesButton) editDraggablesButton.style.display = 'none';
 		if(shuffleChoicesButton) shuffleChoicesButton.style.display = 'none';
-		document.getElementById("drag-ans-list").innerHTML="";
-		document.getElementById("drag-ans-list").style.display='none';
+		$("#drag-ans-list").html("");
+		$("#drag-ans-list").hide();
 	}
 	if(numRight == numQuestions) {
 		checkAnswersButton.style.display = 'none'; // Hide checkAnswers button if no more open cloze fields
 		if(editDraggablesButton) editDraggablesButton.style.display = 'none';
 		if(shuffleChoicesButton) shuffleChoicesButton.style.display = 'none';
-		document.getElementById("drag-ans-list").innerHTML="";
-		document.getElementById("drag-ans-list").style.display='none';
+		$("#drag-ans-list").html("");
+		$("#drag-ans-list").hide();
 	}
 } // End - checkAnswers_DEPRECATED
 
@@ -368,10 +363,10 @@ function savedraggables() {
 	}
 	// Display
 	document.getElementById('drag-ans-list').style.border="2px solid #EDBFAC";
-	document.getElementById("save-quiz-button").style.display='block';
-	document.getElementById("edit-draggables-button").style.display='block';
+	$("#save-quiz-button").hide();
+	$("#edit-draggables-button").hide();
 	if(shuffleChoicesButton) shuffleChoicesButton.style.display='block';
-	document.getElementById("save-draggables-button").style.display='none';
+	$("#save-draggables-button").style.display='none';
 	logDiagnostic("savedraggables[end]");
 } <!--savedraggables-->
 
@@ -452,8 +447,8 @@ function saveQuiz() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	//var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
-	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
+	var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
+	//var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
 		function(data) {
 			logDiagnostic("Data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
@@ -482,7 +477,7 @@ function setTarget(p) { // To address FireFox bug that masks onmouseup event
 
 function processLineBreaks(lineBreaksArray) {
 	logDiagnostic("processLineBreaks[top]: " + lineBreaksArray);
-	clozeQuestionsCreateArea = document.getElementById("cloze-questions-create");
+	clozeQuestionsCreateArea = $("#cloze-questions-create");
 	
 	for(var i = 0, n = 1; i < lineBreaksArray.length; i++, n++) {
 		if(lineBreaksArray[i] !== '') {
@@ -522,7 +517,7 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 	//logDiagnostic("processClozeField - draggable.innerHTML: " + draggable.innerHTML);
 	draggable.setAttribute("class", "draggable");
 	
-	choiceList = document.getElementById("drag-ans-list");
+	choiceList = $("#drag-ans-list");
 	//choiceList.appendChild(draggable);
 	$('#drag-ans-list').append(draggable);
 		
@@ -533,7 +528,7 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 		editDraggablesButton = document.getElementById('edit-draggables-button');
 		editDraggablesButton.style.display="block";
 		if(choiceList.childNodes.length > 1) {
-			document.getElementById("shuffle-draggables-button").style.display='block';
+			$("#shuffle-draggables-button").hide();
 		}
 	} <!--End - if(allowDragAndDrop=='true')-->
 	
@@ -546,7 +541,7 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 	target.innerHTML = insertInput(target.innerHTML, selectedText, clozeTextIndex, false);
 	
 	// Button display	
-	saveQuizButton = document.getElementById("save-quiz-button");
+	saveQuizButton = $("#save-quiz-button");
 	saveQuizButton.style.display = 'block';
 }<!--processClozeField-->
 
@@ -664,9 +659,9 @@ function procDragDropCheck(checkbox) {
 } <!-- procDragDropCheck -->
 
 function initCkBx() {
-	document.getElementById("diag-log-check").checked=false;
-	document.getElementById("allowRetriesCheckbox").checked=false;
-	document.getElementById("DandDCheckbox").checked=false;
+	$("#diag-log-check").checked=false;
+	$("#allowRetriesCheckbox").checked=false;
+	$("#DandDCheckbox").checked=false;
 }
 
 /************** Drag and Drop ********************/
@@ -717,10 +712,10 @@ function responseSavedQuiz(quizJsonStr) {
 	logDiagnostic("responseSavedQuiz - quizContent.drag: " + quizContent.drag);
 	
 	/* Title and meta data */
-	document.getElementById('quiz-title-display').innerHTML = quizContent.quizTitle;
-	document.getElementById('quiz-title-create').style.display='none';
-	document.getElementById('quiz-title-display').style.display='block';
-	document.getElementById('quiz-title-label').style.display='none';
+	$("#quiz-title-display").html(quizContent.quizTitle);
+	$("#quiz-title-create").hide();
+	$("#quiz-title-display").show();
+	$("#quiz-title-label").hide();
 	if(quizContent.retries > 0) allowRetries = true; else false;
 	allowDragAndDrop = quizContent.drag;
 	
@@ -754,7 +749,7 @@ function responseSavedQuiz(quizJsonStr) {
 	
 	/* Draggables */
 	if(allowDragAndDrop) {
-		choiceList = document.getElementById("drag-ans-list");
+		choiceList = $("#drag-ans-list");
 		// remove any residual li artifacts
 		while(choiceList.hasChildNodes()) {
 			choiceList.removeChild(choiceList.lastChild);
@@ -775,21 +770,21 @@ function responseSavedQuiz(quizJsonStr) {
 	}
 		
 	/* Display */
-	clozeQuestionsCreateArea = document.getElementById("cloze-questions-create");
+	clozeQuestionsCreateArea = $("#cloze-questions-create");
 	clozeQuestionsCreateArea.style.display = 'none';
-	clozeQuestionsPresentArea = document.getElementById("cloze-questions-present");
+	clozeQuestionsPresentArea = $("#cloze-questions-present");
 	clozeQuestionsPresentArea.style.display = 'inline-block';
-	document.getElementById("creator-admin-panel").style.display = 'none';
-	document.getElementById("taker-admin-panel").style.display = 'block';
-	document.getElementById("save-quiz-button").style.display = 'none';
-	document.getElementById("edit-text-button").style.display = 'none';
-	document.getElementById("shuffle-draggables-button").style.display = 'none';
-	document.getElementById("edit-draggables-button").style.display = 'none';
-	document.getElementById("save-draggables-button").style.display = 'none';
-	document.getElementById("check-answers-button").style.display = 'block';
-	document.getElementById("savedTextMessage").style.display = 'none';
-	document.getElementById("savedQuizMessage").style.display = 'inline-block';
-	document.getElementById("app-name").innerHTML = "Quiz Wiz"
+	$("#creator-admin-panel").hide();
+	$("#taker-admin-panel").show();
+	$("#save-quiz-button").hide();
+	$("#edit-text-button").hide();
+	$("#shuffle-draggables-button").hide();
+	$("#edit-draggables-button").hide();
+	$("#save-draggables-button").hide();
+	$("#check-answers-button").show();
+	$("#savedTextMessage").hide();
+	$("#savedQuizMessage").show();
+	$("#app-name").innerHTML = "Quiz Wiz"
 	document.title = "Wiz Quiz";
 } // End - responseSavedQuiz
 
