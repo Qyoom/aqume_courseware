@@ -405,9 +405,9 @@ function processLineBreaks(lineBreaksArray) {
 			// Json for saveQuiz data
 			questions.push({ "questNum" : n, "questText" : lineBreaksArray[i], "format" : "qu" });
 		} 
-		else { // lineBreaksArray[i] === '' decrement the question number and reformat the previous questions for extra line spacing.
-			if($("#cloze-questions-create").children().size() > 0 && $("#cloze-questions-create").last().id == (n - 1)) {
-				$("#cloze-questions-create").last().attr("class", "br"); // Html display
+		else { // lineBreaksArray[i] === '' decrement the question number and reformat the previous question for extra line spacing.
+			if($("#cloze-questions-create").children().size() > 0 && $("#cloze-questions-create").children().last().attr("id") == (n - 1)) {
+				$("#cloze-questions-create").children().last().attr("class", "br"); // Html display
 			}
 			questions[questions.length-1].format = "br"; // Json data
 			n--;
