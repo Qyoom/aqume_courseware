@@ -170,8 +170,8 @@ function checkAnswers() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
-	//var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
+	//var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
+	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
 		function(data) {
 			logDiagnostic("checkAnswers - data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
@@ -217,7 +217,7 @@ function responseCheckAnswers(attemptRespJsonStr) {
 	$('#savedQuizMessage').hide();
 	$('#score').text("You scored " + score)
 	if(retryOpt) {
-		$('#score').append("  Try again!");
+		$('#score').append(" - Try again!");
 	}
 	$('#score').show();
 	
@@ -303,6 +303,7 @@ function shuffleChoices() {
  * Send cloze questions, answers, and draggables to server along with title and flags.
  */
 function saveQuiz() {
+	logDiagnostic("saveQuiz - TOP");
 	/* Retrieve and validate all data */
 	// TODO: Needs to be a better validation, error display, and redirect mechanism.
 	/*Quiz Title*/
@@ -357,12 +358,13 @@ function saveQuiz() {
 	 * See: http://stackoverflow.com/questions/2845459/jquery-how-to-make-post-use-contenttype-application-json 
 	 */
 	quiz_json = JSON.stringify(quiz_json, null, '\t');
+	logDiagnostic("quiz_json: " + quiz_json);
 	
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
-	//var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
+	//var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
+	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
 		function(data) {
 			logDiagnostic("Data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
@@ -545,7 +547,6 @@ function procDragDropCheck(checkbox) {
 	logDiagnostic("quiz-gen-main.procDragDropCheck - TOP");
 	if(checkbox.checked) {
 		allowDragAndDrop="true";
-		//logDiagnostic("quiz-gen-main.procDragDropCheck - draggables-panel.children.size: " + ($('#drag-ans-list').children().size()));
 		if($('#drag-ans-list').children().size() > 0) {
 			$('#draggables-panel').show();
 			$('#edit-draggables-button').show();
