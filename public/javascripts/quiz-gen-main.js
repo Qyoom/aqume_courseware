@@ -269,11 +269,11 @@ function savedraggables() {
 	// Display
 	document.getElementById('drag-ans-list').style.border="2px solid #EDBFAC";
 	logDiagnostic("savedraggables 5");
-	$("#save-quiz-button").hide();
-	$("#edit-draggables-button").hide();
+	$("#save-quiz-button").show();
+	$("#edit-draggables-button").show();
 	logDiagnostic("savedraggables 6");
 	$("#shuffle-draggables-button").show();
-	$("#save-draggables-button").style.display='none';
+	$("#save-draggables-button").hide();
 	logDiagnostic("savedraggables[end]");
 } <!--savedraggables-->
 
