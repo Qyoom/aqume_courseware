@@ -75,13 +75,13 @@ object Quizzes extends Controller with Secured{
   	 * See: https://github.com/jamesward/play2torial/blob/master/JAVA.md#get-tasks-as-json
   	 */
 	def saveQuiz = Action { implicit request =>
-		println("---------newQuiz - request.headers.toSimpleMap: " + request.headers.toSimpleMap)
-		println("request [newQuiz]: " + request)
-		//println("---------newQuiz - request.body: " + request.body)
-		//println("---------newQuiz - request.body.asJson: " + request.body.asJson)
-		println("---------newQuiz - request.body.asJson.map: " + request.body.asJson.map {json =>
+		println("---------Quizzes.saveQuiz - request.headers.toSimpleMap: " + request.headers.toSimpleMap)
+		println("---------Quizzes.saveQuiz - request: " + request)
+		println("---------Quizzes.saveQuiz - request.body: " + request.body)
+		println("---------Quizzes.saveQuiz - request.body.asJson: " + request.body.asJson)
+		println("---------Quizzes.saveQuiz - request.body.asJson.map: " + request.body.asJson.map {json =>
 	  		json
-	  	})
+	  	});
 	
 	  	// TO DO: All model stuff should be in the model! Let Quiz coordinate its substructures.
 		request.body.asJson.map { json =>
