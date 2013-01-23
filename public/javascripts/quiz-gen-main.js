@@ -416,15 +416,16 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 	draggable.innerHTML = selectedText;
 	draggable.setAttribute("class", "draggable");
 	
-	$('#drag-ans-list').append(draggable);
+	$("#drag-ans-list").append(draggable);
 		
 	if(allowDragAndDrop=='true') {
-		$('#draggables-panel').show();
+		$("#edit-draggables-button").show();
+		$("#draggables-panel").show();
 				
 		// Edit draggables button
 		$("#edit-cloze-button").show();
 		if($("#drag-ans-list").children().size() > 1) {
-			$("#shuffle-draggables-button").hide();
+			$("#shuffle-draggables-button").show();
 		}
 	} <!--End - if(allowDragAndDrop=='true')-->
 	
@@ -534,7 +535,7 @@ function procDragDropCheck(checkbox) {
 	logDiagnostic("quiz-gen-main.procDragDropCheck - TOP");
 	if(checkbox.checked) {
 		allowDragAndDrop="true";
-		logDiagnostic("quiz-gen-main.procDragDropCheck - draggables-panel.children.size: " + ($('#drag-ans-list').children().size()));
+		//logDiagnostic("quiz-gen-main.procDragDropCheck - draggables-panel.children.size: " + ($('#drag-ans-list').children().size()));
 		if($('#drag-ans-list').children().size() > 0) {
 			$('#draggables-panel').show();
 			$('#edit-draggables-button').show();
