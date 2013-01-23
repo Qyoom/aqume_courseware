@@ -154,12 +154,9 @@ function checkAnswers() {
 		$(this).children('input:text, span.correctAns').each(function(){ 
 			var wordInd = parseInt(this.id); // this: one input field. Multiple input fields per questionP are ordered by index.
 			var taker
-			//logDiagnostic("[1]this is: " + $(this).get(0).tagName)
 			if($(this).is('input:text')) {
-				//logDiagnostic("[2]this is: " + $(this).get(0).tagName)
 				takerAns = $(this).val(); // one user answer per input field
 			} else if($(this).is('span.correctAns')) {
-				//logDiagnostic("[3]this is: " + $(this).get(0).tagName)
 				takerAns = $(this).text(); // correct answer from previous attempt
 			}
 			ansFields.push({ "wordInd" : wordInd, "takerAns" : takerAns }); // one index/text-value pair
@@ -180,7 +177,6 @@ function checkAnswers() {
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
 			responseCheckAnswers(data); 
 		})
-		// Not sure what use to make of these, if any at this point. The response it pretty fast with this app so far...
 		.success(function(data) { logDiagnostic("checkAnswers - second success: " + data); })
 		.error(function(data) { logDiagnostic("checkAnswers - error: " + data); })
 		.complete(function(data) { logDiagnostic("checkAnswers - complete: " + data); });
@@ -195,21 +191,17 @@ function responseCheckAnswers(attemptRespJsonStr) {
 	var attemptRespJson = $.parseJSON(attemptRespJsonStr)
 	$.each(attemptRespJson.results, function(i, result) {
 		result = $.parseJSON(result);
-		//var questNum = result.questNum;
-		//var wordInd	 = result.wordInd;
 		
 		logDiagnostic("-------responseCheckAnswers - questNum: " + result.questNum + " | wordInd: " + result.wordInd + 
 			" | is correct: " + result.isCorrect + "------------------");
 		
 		// Replace input field with correct word on successful match
 		if(result.isCorrect) {
-			//var correctAns = result.answer;
 			var corrAnsFormatted = "<span id=\"" + result.wordInd + "\" class=\"correctAns\">" + result.answer + "</span>";
 			$('#cloze-questions-present').find('p' + '#' + result.questNum).find(
 				'input:text' + "#" + result.wordInd).replaceWith(corrAnsFormatted);
 		}
 		else {
-			//logDiagnostic("result.isCorrect: " + result.isCorrect);
 			$('#cloze-questions-present').find('p' + '#' + result.questNum).find(
 				'input:text' + "#" + result.wordInd).removeClass('cloze-field').addClass('cloze-field-incorrect');
 		}
@@ -263,26 +255,29 @@ function editdraggables() {
 } <!--editdraggables-->
 
 function savedraggables() {
-	logDiagnostic("savedraggables[top]");
 	createClozeAllowed = true;
 	$("#drag-ans-list").attr('contentEditable', false);
-	//var listItems = document.getElementById('drag-ans-list').childNodes;
-	for(var i = 0; i < listItems.length; i++) {
-		var innerHTMLClean = $("#drag-ans-list").children().item(i).innerHTML.replace(/(^<br>|<br>$)/g,"");
-		$("#drag-ans-list").children().item(i).setAttribute('class', 'draggable');
-		$("#drag-ans-list").children().item(i).innerHTML = innerHTMLClean;
-	}
+	$("#drag-ans-list").children(".draggable").each(function() {
+		var innerHTMLClean = $("this").text().replace(/(^<br>|<br>$)/g,"");
+		logDiagnostic("savedraggables 2.5");
+		$("this").attr('class', 'draggable');
+		logDiagnostic("savedraggables 3");
+		$("this").html(innerHTMLClean);
+		logDiagnostic("savedraggables 3.5");
+	});
+	logDiagnostic("savedraggables 4");
 	// Display
 	document.getElementById('drag-ans-list').style.border="2px solid #EDBFAC";
+	logDiagnostic("savedraggables 5");
 	$("#save-quiz-button").hide();
 	$("#edit-draggables-button").hide();
+	logDiagnostic("savedraggables 6");
 	$("#shuffle-draggables-button").show();
 	$("#save-draggables-button").style.display='none';
 	logDiagnostic("savedraggables[end]");
 } <!--savedraggables-->
 
 function shuffleChoices() {
-	alert("shuffleChoices - top");
 	var choices = document.getElementById('drag-ans-list');
 	var nodes = choices.children, i = 0;
 	nodes = Array.prototype.slice.call(nodes);
@@ -292,16 +287,14 @@ function shuffleChoices() {
 		choices.appendChild(nodes[i]);
 		++i;
 	}
-	alert("shuffleChoices - bottom");
 } <!--shuffleChoices-->
 
 /**
  * Send cloze questions, answers, and draggables to server along with title and flags.
  */
 function saveQuiz() {
-	alert("saveQuiz TOP");
 	/* Retrieve and validate all data */
-	// TODO: There needs to be a better validation, error display, and redirect mechanism!!!
+	// TODO: Needs to be a better validation, error display, and redirect mechanism.
 	/*Quiz Title*/
 	quizTitle = document.getElementById('quiz-title-create');
 	if(!quizTitle.value) {
@@ -336,16 +329,12 @@ function saveQuiz() {
 		"draggables" : draggables
 	};
 		
-	alert("saveQuiz - about to process draggables")
 	/* Draggables */
 	var sequence_num = 0;
 	if(dragCheckBox.checked) {
-		alert("saveQuiz - about to enter for loop for draggables");
 		$("#drag-ans-list").children(".draggable").each(function () {
-			alert("saveQuiz - looping draggables: " + $(this));
 			$(this).html($(this).html().replace(/(<br>|<br>$)/g,""));
 			if($(this).html() !== "") {
-				alert("saveQuiz - draggable " + $(this) + " : " + $(this).html());
 				draggables.push({ "draggable" : $(this).html(), "dispOrder" : sequence_num});
 			} else sequence_num--; // don't increment for blanks
 		});
@@ -374,16 +363,13 @@ function saveQuiz() {
 		.complete(function(data) { logDiagnostic("complete: " + data); });
 		// Set another completion function for the request above
 		jqxhr.complete(function(data){ logDiagnostic("second complete: " + data); });
-		
-		alert("saveQuiz - Ajax completed")
-	
+			
 	// Clear data containers
 	quizTextLineBreaksArray = [];
 	questions    = [];
 	ansAssoc     = []; // for associative collecting and replacement
 	answers      = []; // final data version for post
 	draggables   = [];
-	alert("saveQuiz - end");
 } <!--End - saveQuiz-->
 
 
@@ -411,7 +397,6 @@ function processLineBreaks(lineBreaksArray) {
 		} 
 		else { // lineBreaksArray[i] === '' decrement the question number and reformat the previous questions for extra line spacing.
 			if($("#cloze-questions-create").children().size() > 0 && $("#cloze-questions-create").last().id == (n - 1)) {
-				alert("processLineBreaks - loop else");
 				$("#cloze-questions-create").last().attr("class", "br"); // Html display
 			}
 			questions[questions.length-1].format = "br"; // Json data
@@ -429,7 +414,6 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 	// Populate the draggable answer words list
 	var draggable = document.createElement('li');
 	draggable.innerHTML = selectedText;
-	//logDiagnostic("processClozeField - draggable.innerHTML: " + draggable.innerHTML);
 	draggable.setAttribute("class", "draggable");
 	
 	$('#drag-ans-list').append(draggable);
@@ -496,7 +480,6 @@ var toType = function(obj) {
 
 // selection word count
 function cnt(selection) {
-	//logDiagnostic("function cnt - selection: " + selection);
 	var s = selection.toString();
 	var length = 0;
 	var a = s.replace(/\s/g,' ');
@@ -550,27 +533,22 @@ function procAllowRetry(checkbox) {
 function procDragDropCheck(checkbox) {
 	logDiagnostic("quiz-gen-main.procDragDropCheck - TOP");
 	if(checkbox.checked) {
-		logDiagnostic("quiz-gen-main.procDragDropCheck - checked");
 		allowDragAndDrop="true";
 		logDiagnostic("quiz-gen-main.procDragDropCheck - draggables-panel.children.size: " + ($('#drag-ans-list').children().size()));
 		if($('#drag-ans-list').children().size() > 0) {
-			alert("procDragDropCheck - Test to show draggables panel - children size: " +$('#drag-ans-list').children().size());
 			$('#draggables-panel').show();
 			$('#edit-draggables-button').show();
 			if($('#drag-ans-list').children().size() > 1) {
-				alert("procDragDropCheck - Test to show shuffle button - children size: " + $('#drag-ans-list').children().size());
 				$('#shuffle-draggables-button').show();
 			}
 		}
 	}
 	else { // checkbox unchecked
-		logDiagnostic("quiz-gen-main.procDragDropCheck - unchecked");
 		allowDragAndDrop="false";
 		createClozeAllowed = true; // Since we are not allowing editing, we need to be sure we can create cloze inputs
 		$('#drag-ans-list').css("border", "2px solid #EDBFAC");
 		$('#drag-ans-list').attr("contentEditable", "false");
 		$('#draggables-panel').hide();
-		logDiagnostic("quiz-gen-main.procDragDropCheck - unchecked - end");
 	}
 } <!-- procDragDropCheck -->
 
@@ -582,14 +560,12 @@ function initCkBx() {
 
 /************** Drag and Drop ********************/
 function allowDrop(ev) {
-	//logDiagnostic("allowDrop");
 	ev.preventDefault();
 }
 
 function dragText(ev) {
 	logDiagnostic("dragText - event: " + ev + " | ev.target: " + ev.target + " | ev.target.id: " + ev.target.id);
 	document.body.style.cursor = 'move';
-	//ev.dataTransfer.setData("Text", ev.target.id); // "Text" is the id of the target, which is the item being dragged.
 	ev.dataTransfer.setData("Text", ev.target.id);
 }
 
@@ -618,7 +594,6 @@ function dropText(ev) {
 function responseSavedQuiz(quizJsonStr) {
 	quizContent = $.parseJSON(quizJsonStr);
 
-	alert("responseSavedQuiz - TOP");
 	logDiagnostic("responseSavedQuiz - quizContent.quizId: " + quizContent.quizId);
 	logDiagnostic("responseSavedQuiz - quizContent.quizTitle: " + quizContent.quizTitle);
 	logDiagnostic("responseSavedQuiz - quizContent.retries: " + quizContent.retries);
@@ -658,21 +633,16 @@ function responseSavedQuiz(quizJsonStr) {
 			questText = insertInput(questText, answer, wordInd, true);
 		}
 		$('#cloze-questions-present').append('<p id=\"' + question.questNum + '\" class=\"' + question.format + '\">' + questText + '</p>');
-		alert("responseSavedQuiz - End questions");
 	});
 	
 	/* Draggables */
 	if(allowDragAndDrop) {
-		alert("responseSavedQuiz - Start draggables - about to remove artifacts");
 		// remove any residual li artifacts
 		while($("#drag-ans-list").children().size() > 0) {
-			alert("removing one...");
 			$("#drag-ans-list").children().last().remove();
 		}
-		alert("responseSavedQuiz - Start draggables 2");
 		
 		$.each(quizContent.draggables, function(i, draggable) {
-			alert("draggables - each " + i);
 			draggable = $.parseJSON(draggable);			
 			var newDraggable = document.createElement("li");
 			newDraggable.setAttribute("id", draggable.draggable);
@@ -682,10 +652,8 @@ function responseSavedQuiz(quizJsonStr) {
 			newDraggable.setAttribute("style", "cursor: move");
 			newDraggable.innerHTML = draggable.draggable;
 			$("#drag-ans-list").append(newDraggable);
-			alert("responseSavedQuiz[draggables] - draggable: " + draggable.draggable + " | dispOrder: " + draggable.dispOrder);
 		});
 	}
-	alert("responseSavedQuiz - finished with draggables. Now on to display...");
 		
 	/* Display */
 	$("#cloze-questions-create").hide();
@@ -703,7 +671,6 @@ function responseSavedQuiz(quizJsonStr) {
 	$("#app-name").innerHTML = "Quiz Wiz"
 	document.title = "Wiz Quiz";
 	
-	alert("responseSavedQuiz - end");
 } // End - responseSavedQuiz
 
 
