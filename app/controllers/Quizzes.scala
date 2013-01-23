@@ -241,8 +241,8 @@ object Quizzes extends Controller with Secured{
 	        	      	case false => "answer" -> ""
 	        	    }
 	  		    )))},
-			    "score" -> (correct + "/" + total)
-			    // TO DO: What about notification for available retries?
+			    "score" -> (correct + "/" + total),
+			    "retryOpt" -> !(correct == total) // TO DO: Need to also factor in allotted retries.
 			))
 			Json.toJson(checkAnsResult)
 			

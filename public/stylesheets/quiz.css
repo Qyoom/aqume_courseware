@@ -234,7 +234,7 @@ label {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 13px;
 	font-weight: bold;
-	color: #0C0;
+	color: rgb(0, 51, 255);
 }
 
 .draggable {

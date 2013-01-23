@@ -207,10 +207,20 @@ function responseCheckAnswers(attemptRespJsonStr) {
 		}
 	}); // End - each(attemptRespJson.results
 	
+	var retryOpt = attemptRespJson.retryOpt;
+	logDiagnostic("responseCheckAnswers - retryOpt: " + retryOpt);
+	if(!retryOpt) {
+		$("#check-answers-button").hide(); 
+	}
 	var score = attemptRespJson.score;
 	logDiagnostic("=======> score: " + score);
 	$('#savedQuizMessage').hide();
-	$('#score').text("You scored " + score).show();
+	$('#score').text("You scored " + score)
+	if(retryOpt) {
+		$('#score').append("  Try again!");
+	}
+	$('#score').show();
+	
 } // End - responseCheckAnswers
 
 /**
