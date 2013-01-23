@@ -1,13 +1,4 @@
-/**** Variables ****/
-
-// Buttons
-var saveTextButton;
-var editTextButton;
-var checkAnswersButton;
-var editDraggablesButton;
-var saveDraggablesButton;
-var shuffleChoicesButton;
-var saveQuizButton;
+/**** Global variables ****/
 
 // User message display
 var enterTextMessage;
@@ -35,10 +26,6 @@ var quizTitle;
 
 // UI/Componentry/DOM elements
 var target;
-var choiceList; // ul container of draggable word/answers
-var clozeEditTextArea;
-var clozeQuestionsCreateArea;
-var clozeQuestionsPresentArea;
 
 // Data containers
 var quizTextLineBreaksArray;
@@ -56,15 +43,12 @@ function saveText() {
 	logDiagnostic("# saveText - top");
 	createClozeAllowed = true;
 	quizText = $("#cloze-text-edit").val();
-	
 	// Process line breaks as arrays
 	quizTextLineBreaksArray = quizText.split(new RegExp("\\n", "g"));
-	// populates clozeQuestionsCreateArea with <p> elements and populates quizJson data
+	// populates "cloze-questions-create" with <p> elements and populates quizJson data
 	processLineBreaks(quizTextLineBreaksArray);
-	
-	clozeEditTextArea.style.display = 'none';
-	clozeQuestionsCreateArea.style.display = 'inline-block';
-
+	$("#cloze-text-edit").hide();
+	$("#cloze-questions-create").show();
 	$("#save-text-button").hide();
 	$("#edit-text-button").show();
 
@@ -189,8 +173,8 @@ function checkAnswers() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	//var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
-	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
+	var jqxhr = $.post('http://localhost:9000/checkAnswers', attempt_json,
+	//var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/checkAnswers', attempt_json,
 		function(data) {
 			logDiagnostic("checkAnswers - data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
@@ -206,7 +190,6 @@ function checkAnswers() {
 
 function responseCheckAnswers(attemptRespJsonStr) {
 	logDiagnostic("responseCheckAnswers - attemptRespJsonStr: " + attemptRespJsonStr);
-	//alert("responseCheckAnswers - attemptRespJsonStr: " + attemptRespJsonStr);
 	
 	// Parse Json response
 	var attemptRespJson = $.parseJSON(attemptRespJsonStr)
@@ -237,140 +220,69 @@ function responseCheckAnswers(attemptRespJsonStr) {
 	$('#savedQuizMessage').hide();
 	$('#score').text("You scored " + score).show();
 } // End - responseCheckAnswers
- 
-// TO DO: NIX
-function checkAnswers_DEPRECATED() {
-	createClozeAllowed = false;
-	if(editDraggablesButton) editDraggablesButton.style.display='none';
-	if(shuffleChoicesButton) shuffleChoicesButton.style.display='none';
-	var inputs = document.getElementsByClassName('cloze-field'); // NodeList
-	if(numQuestions == 0) numQuestions = inputs.length; // keep track for scoring
-	
-	// Transfer inputs NodeList to array
-	var inputsArr = [inputs.length];
-	for(var i = 0, node; node = inputs[i]; ++i) {
-		inputsArr.push(node);
-	}
-
-	// Loop inputs array
-	while(inputsArr.length > 1) {
-		var input = inputsArr.pop();
-		var parent = input.parentNode; // HTMLParagraphElement
-		var result;
-		var resultclass;
-		var correctAnswer;
-		if(input.getAttribute('type')=='text'){
-			correctAnswer = input.getAttribute("name");				
-			// Correct answer
-			if(input.value == correctAnswer) {
-				result = "\| CORRECT!";
-				resultclass = "correctStyle";
-				var corrAnsFormatted = "<span class=\"correctAns\">" + correctAnswer + "</span>";
-				parent.innerHTML = parent.innerHTML.replace(/\n|<.*?>/, corrAnsFormatted);
-				numRight++; // for score
-			}
-			// Incorrect answer
-			else {
-				result = "\| NOT CORRECT";
-				resultclass = "incorrectStyle";
-			}
-		}
-		// Attach result message
-		if(attemptNum > 0) {
-			parent.innerHTML = parent.innerHTML.replace(/\| NOT CORRECT/, result);
-			parent.innerHTML = parent.innerHTML.replace(/incorrectStyle/, resultclass);
-		} else {
-			parent.innerHTML = parent.innerHTML + " " + "<span class=\"" + resultclass + "\">" + result + "</span>";
-		};
-		
-	} // End inputs loop
-	attemptNum++; // Keep track of number of attempts
-	scoreMessage = $("#score");
-	scoreMessage.innerHTML = "Your score: " + numRight + "\/" + numQuestions;
-	scoreMessage.style.display = 'inline-block';
-	savedTextMessage.style.display = 'none';
-	if(allowRetries) checkAnswersButton.style.display='block';
-	else {
-		checkAnswersButton.style.display = 'none';
-		if(editDraggablesButton) editDraggablesButton.style.display = 'none';
-		if(shuffleChoicesButton) shuffleChoicesButton.style.display = 'none';
-		$("#drag-ans-list").html("");
-		$("#drag-ans-list").hide();
-	}
-	if(numRight == numQuestions) {
-		checkAnswersButton.style.display = 'none'; // Hide checkAnswers button if no more open cloze fields
-		if(editDraggablesButton) editDraggablesButton.style.display = 'none';
-		if(shuffleChoicesButton) shuffleChoicesButton.style.display = 'none';
-		$("#drag-ans-list").html("");
-		$("#drag-ans-list").hide();
-	}
-} // End - checkAnswers_DEPRECATED
 
 /**
  * editText() - converts quiz back to raw text for editing.
  * Doesn't retain cloze field state.
  */
 function editText() {
-	clozeEditTextArea.style.display = 'inline-block';
-	clozeQuestionsCreateArea.style.display = 'none';
-	saveTextButton.style.display = 'block';
-	editTextButton.style.display = 'none';
-	//checkAnswersButton.style.display = 'none';
-	saveQuizButton.style.display = 'none';
+	$("#cloze-text-edit").show();
+	$("#cloze-questions-create").hide();
+	$("#save-text-button").show();
+	$("#edit-text-button").hide();
+	$("#save-quiz-button").hide();
 	enterTextMessage.style.display = 'block';
 	savedTextMessage.style.display = 'none';
 	if(scoreMessage) scoreMessage.style.display = 'none';
-	choiceList.innerHTML='';
-	choiceList.style.display='none';
-	if(editDraggablesButton) editDraggablesButton.style.display = 'none';
-	if(shuffleChoicesButton) shuffleChoicesButton.style.display = 'none';
-	if(saveDraggablesButton) saveDraggablesButton.style.display = 'none';
+	$("#drag-ans-list").html("");
+	$("#drag-ans-list").hide();
+	$("#edit-cloze-button").hide()
+	$("#shuffle-draggables-button").hide();
+	$("#save-draggables-button").hide();
 	document.getElementById('drag-ans-list').style.border="2px solid #EDBFAC";
 } <!--editText-->
 
 function editdraggables() {
 	logDiagnostic("editdraggables[top]");
 	createClozeAllowed = false;
-	saveQuizButton.style.display='none';
+	$("#save-quiz-button").hide();
 	var draggableListItems = document.getElementsByClassName("draggable");
 	for(var i = 0; i < draggableListItems.length; i++) {
 		draggableListItems[i].style.cursor = 'text';
 		draggableListItems[i].setAttribute('draggable', 'false');
 	}
-	choiceList = document.getElementById('drag-ans-list');
-	choiceList.contentEditable='true';
-	choiceList.style.cursor = 'default';
+	$("#drag-ans-list").attr('contentEditable', true);
+	$('#drag-ans-list').css('cursor','default');
 	
 	// Display
 	document.getElementById('drag-ans-list').style.border="2px dashed red";
 	document.getElementById('edit-draggables-button').style.display='none';
-	if(shuffleChoicesButton) shuffleChoicesButton.style.display='none';
-	saveDraggablesButton = document.getElementById('save-draggables-button');
-	saveDraggablesButton.style.display='block';
+	$("#shuffle-draggables-button").hide();
+	$("#save-draggables-button").show();
 	logDiagnostic("editdraggables[end]");
 } <!--editdraggables-->
 
-// TO DO: NIX ?
 function savedraggables() {
 	logDiagnostic("savedraggables[top]");
 	createClozeAllowed = true;
-	choiceList.contentEditable='false';
-	var listItems = document.getElementById('drag-ans-list').childNodes;
+	$("#drag-ans-list").attr('contentEditable', false);
+	//var listItems = document.getElementById('drag-ans-list').childNodes;
 	for(var i = 0; i < listItems.length; i++) {
-		var innerHTMLClean = listItems.item(i).innerHTML.replace(/(^<br>|<br>$)/g,"");
-		listItems.item(i).setAttribute('class', 'draggable');
-		listItems.item(i).innerHTML = innerHTMLClean;
+		var innerHTMLClean = $("#drag-ans-list").children().item(i).innerHTML.replace(/(^<br>|<br>$)/g,"");
+		$("#drag-ans-list").children().item(i).setAttribute('class', 'draggable');
+		$("#drag-ans-list").children().item(i).innerHTML = innerHTMLClean;
 	}
 	// Display
 	document.getElementById('drag-ans-list').style.border="2px solid #EDBFAC";
 	$("#save-quiz-button").hide();
 	$("#edit-draggables-button").hide();
-	if(shuffleChoicesButton) shuffleChoicesButton.style.display='block';
+	$("#shuffle-draggables-button").show();
 	$("#save-draggables-button").style.display='none';
 	logDiagnostic("savedraggables[end]");
 } <!--savedraggables-->
 
 function shuffleChoices() {
+	alert("shuffleChoices - top");
 	var choices = document.getElementById('drag-ans-list');
 	var nodes = choices.children, i = 0;
 	nodes = Array.prototype.slice.call(nodes);
@@ -380,13 +292,14 @@ function shuffleChoices() {
 		choices.appendChild(nodes[i]);
 		++i;
 	}
+	alert("shuffleChoices - bottom");
 } <!--shuffleChoices-->
 
 /**
  * Send cloze questions, answers, and draggables to server along with title and flags.
  */
 function saveQuiz() {
-	logDiagnostic("saveQuiz TOP");
+	alert("saveQuiz TOP");
 	/* Retrieve and validate all data */
 	// TODO: There needs to be a better validation, error display, and redirect mechanism!!!
 	/*Quiz Title*/
@@ -423,17 +336,19 @@ function saveQuiz() {
 		"draggables" : draggables
 	};
 		
+	alert("saveQuiz - about to process draggables")
 	/* Draggables */
 	var sequence_num = 0;
 	if(dragCheckBox.checked) {
-		choiceList = document.getElementById('drag-ans-list');
-		for(var i = 0, s = 1; i < choiceList.childNodes.length; i++, s++) {
-			choiceList.childNodes[i].innerHTML = choiceList.childNodes[i].innerHTML.replace(/(<br>|<br>$)/g,"");
-			if(choiceList.childNodes[i].innerHTML !== "") {
-				logDiagnostic("saveQuiz - draggable " + i + " : " + choiceList.childNodes[i].innerHTML);
-				draggables.push({ "draggable" : choiceList.childNodes[i].innerHTML, "dispOrder" : s});
-			} else s--; // don't increment for blanks
-		}
+		alert("saveQuiz - about to enter for loop for draggables");
+		$("#drag-ans-list").children(".draggable").each(function () {
+			alert("saveQuiz - looping draggables: " + $(this));
+			$(this).html($(this).html().replace(/(<br>|<br>$)/g,""));
+			if($(this).html() !== "") {
+				alert("saveQuiz - draggable " + $(this) + " : " + $(this).html());
+				draggables.push({ "draggable" : $(this).html(), "dispOrder" : sequence_num});
+			} else sequence_num--; // don't increment for blanks
+		});
 	}
 	logDiagnostic("saveQuiz - draggables: " + draggables);
 	
@@ -447,8 +362,8 @@ function saveQuiz() {
 	$.ajaxSetup({ 
 		contentType: "application/json; charset=utf-8"
 	});
-	//var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
-	var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
+	var jqxhr = $.post('http://localhost:9000/saveQuiz', quiz_json,
+	//var jqxhr = $.post('http://ancient-mountain-7101.herokuapp.com/saveQuiz', quiz_json,
 		function(data) {
 			logDiagnostic("Data returned: " + data);
 			// Sort of like a re-direct, but this is a SPA. But going to new phase of application: From quiz 'creating' to quiz 'taking'.
@@ -459,6 +374,8 @@ function saveQuiz() {
 		.complete(function(data) { logDiagnostic("complete: " + data); });
 		// Set another completion function for the request above
 		jqxhr.complete(function(data){ logDiagnostic("second complete: " + data); });
+		
+		alert("saveQuiz - Ajax completed")
 	
 	// Clear data containers
 	quizTextLineBreaksArray = [];
@@ -466,6 +383,7 @@ function saveQuiz() {
 	ansAssoc     = []; // for associative collecting and replacement
 	answers      = []; // final data version for post
 	draggables   = [];
+	alert("saveQuiz - end");
 } <!--End - saveQuiz-->
 
 
@@ -477,12 +395,9 @@ function setTarget(p) { // To address FireFox bug that masks onmouseup event
 
 function processLineBreaks(lineBreaksArray) {
 	logDiagnostic("processLineBreaks[top]: " + lineBreaksArray);
-	clozeQuestionsCreateArea = $("#cloze-questions-create");
-	
 	for(var i = 0, n = 1; i < lineBreaksArray.length; i++, n++) {
 		if(lineBreaksArray[i] !== '') {
 			var questText = lineBreaksArray[i];
-			
 			// Html for UI display
 			var newPar = document.createElement("p");
 			newPar.setAttribute("id", n);
@@ -490,14 +405,14 @@ function processLineBreaks(lineBreaksArray) {
 			newPar.setAttribute("onclick", "setTarget(this)");
 			newPar.setAttribute("onmouseup", "selectedTextHandler()");
 			newPar.innerHTML = questText;
-			clozeQuestionsCreateArea.appendChild(newPar);
-	
+			$("#cloze-questions-create").append(newPar);
 			// Json for saveQuiz data
 			questions.push({ "questNum" : n, "questText" : lineBreaksArray[i], "format" : "qu" });
 		} 
 		else { // lineBreaksArray[i] === '' decrement the question number and reformat the previous questions for extra line spacing.
-			if(clozeQuestionsCreateArea.childNodes.length > 0 && clozeQuestionsCreateArea.lastChild.id == (n - 1)) {
-				clozeQuestionsCreateArea.lastChild.setAttribute("class", "br"); // Html display
+			if($("#cloze-questions-create").children().size() > 0 && $("#cloze-questions-create").last().id == (n - 1)) {
+				alert("processLineBreaks - loop else");
+				$("#cloze-questions-create").last().attr("class", "br"); // Html display
 			}
 			questions[questions.length-1].format = "br"; // Json data
 			n--;
@@ -517,22 +432,19 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 	//logDiagnostic("processClozeField - draggable.innerHTML: " + draggable.innerHTML);
 	draggable.setAttribute("class", "draggable");
 	
-	choiceList = $("#drag-ans-list");
-	//choiceList.appendChild(draggable);
 	$('#drag-ans-list').append(draggable);
 		
 	if(allowDragAndDrop=='true') {
 		$('#draggables-panel').show();
 				
 		// Edit draggables button
-		editDraggablesButton = document.getElementById('edit-draggables-button');
-		editDraggablesButton.style.display="block";
-		if(choiceList.childNodes.length > 1) {
+		$("#edit-cloze-button").show();
+		if($("#drag-ans-list").children().size() > 1) {
 			$("#shuffle-draggables-button").hide();
 		}
 	} <!--End - if(allowDragAndDrop=='true')-->
 	
-	// Remove any existing input field incase this is a re-selection of a previous input selection.
+	// Remove any existing input field in case this is a re-selection of a previous input selection.
 	var anyCurrentCloze = target.getElementsByClassName("cloze-field"); // NodeList
 	if(anyCurrentCloze.length > 0) {
 		target.innerHTML = target.innerHTML.replace(/\n|<.*?>/, anyCurrentCloze[0].name);
@@ -541,8 +453,10 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 	target.innerHTML = insertInput(target.innerHTML, selectedText, clozeTextIndex, false);
 	
 	// Button display	
-	saveQuizButton = $("#save-quiz-button");
-	saveQuizButton.style.display = 'block';
+	$("#save-quiz-button").show();
+	$("#edit-cloze-button").hide();
+	$("#edit-text-button").hide();
+	logDiagnostic("processClozeField[bottom]");
 }<!--processClozeField-->
 
 function insertInput(questToInput, selectedText, clozeTextIndex, takeMode) { 
@@ -556,7 +470,6 @@ function insertInput(questToInput, selectedText, clozeTextIndex, takeMode) {
 	if(allowDragAndDrop && takeMode) {
 		inputField.setAttribute("ondrop", 'dropText(event)');
 		inputField.setAttribute("ondragover", 'allowDrop(event)');
-		//inputField.setAttribute("name", selectedText); // TO DO: NO NO NO NO NO!!!! YOU CANNOT EXPOSE THE ANSWER LIKE THIS!!!
 	}
 	var questToInput = questToInput.replace(/\s/g,' ');
 	var questIndArr = questToInput.split(' ');
@@ -639,11 +552,13 @@ function procDragDropCheck(checkbox) {
 	if(checkbox.checked) {
 		logDiagnostic("quiz-gen-main.procDragDropCheck - checked");
 		allowDragAndDrop="true";
-		logDiagnostic("quiz-gen-main.procDragDropCheck - draggables-panel.children.length: " + ($('#drag-ans-list').children().length));
-		if($('#drag-ans-list').children().length > 0) {
+		logDiagnostic("quiz-gen-main.procDragDropCheck - draggables-panel.children.size: " + ($('#drag-ans-list').children().size()));
+		if($('#drag-ans-list').children().size() > 0) {
+			alert("procDragDropCheck - Test to show draggables panel - children size: " +$('#drag-ans-list').children().size());
 			$('#draggables-panel').show();
 			$('#edit-draggables-button').show();
-			if($('#drag-ans-list').children().length > 1) {
+			if($('#drag-ans-list').children().size() > 1) {
+				alert("procDragDropCheck - Test to show shuffle button - children size: " + $('#drag-ans-list').children().size());
 				$('#shuffle-draggables-button').show();
 			}
 		}
@@ -652,9 +567,10 @@ function procDragDropCheck(checkbox) {
 		logDiagnostic("quiz-gen-main.procDragDropCheck - unchecked");
 		allowDragAndDrop="false";
 		createClozeAllowed = true; // Since we are not allowing editing, we need to be sure we can create cloze inputs
-		$('#drag-ans-list').border="2px solid #EDBFAC";
-		$('#drag-ans-list').contentEditable='false';
+		$('#drag-ans-list').css("border", "2px solid #EDBFAC");
+		$('#drag-ans-list').attr("contentEditable", "false");
 		$('#draggables-panel').hide();
+		logDiagnostic("quiz-gen-main.procDragDropCheck - unchecked - end");
 	}
 } <!-- procDragDropCheck -->
 
@@ -689,11 +605,7 @@ function dropText(ev) {
 	ev.target.value = inputEl.innerHTML;
 	logDiagnostic("dropText - target.value: " + target.value);
 	// Remove draggables ul artifact if empty
-	choiceList = document.getElementById('drag-ans-list');
-	if(!choiceList || choiceList.childNodes.length==0) {
-		//choiceList.style.display='none';
-		//if(editDraggablesButton) editDraggablesButton.style.display='none';
-		//if(shuffleChoicesButton) shuffleChoicesButton.style.display='none';
+	if(!$("#drag-ans-list") || $("#drag-ans-list").children().size()==0) {
 		$('#draggables-panel').hide();
 	}
 	document.body.style.cursor = 'default';
@@ -706,6 +618,7 @@ function dropText(ev) {
 function responseSavedQuiz(quizJsonStr) {
 	quizContent = $.parseJSON(quizJsonStr);
 
+	alert("responseSavedQuiz - TOP");
 	logDiagnostic("responseSavedQuiz - quizContent.quizId: " + quizContent.quizId);
 	logDiagnostic("responseSavedQuiz - quizContent.quizTitle: " + quizContent.quizTitle);
 	logDiagnostic("responseSavedQuiz - quizContent.retries: " + quizContent.retries);
@@ -725,7 +638,7 @@ function responseSavedQuiz(quizJsonStr) {
 		answer = $.parseJSON(answer);
 		var key = (answer.questNum) + "";
 		answers[key] = answer; // TO DO: NO NO NO. Answers cannot be exposed! This must not be passed. Rather, a stub/token must be set in the question sentence. The index can be used if necessary.
-		logDiagnostic("responseSavedQuiz - answers." + key + ": " + answers[key].answer);
+		logDiagnostic("responseSavedQuiz[answers]." + key + ": " + answers[key].answer);
 	});
 	
 	/* Questions */
@@ -745,17 +658,21 @@ function responseSavedQuiz(quizJsonStr) {
 			questText = insertInput(questText, answer, wordInd, true);
 		}
 		$('#cloze-questions-present').append('<p id=\"' + question.questNum + '\" class=\"' + question.format + '\">' + questText + '</p>');
+		alert("responseSavedQuiz - End questions");
 	});
 	
 	/* Draggables */
 	if(allowDragAndDrop) {
-		choiceList = $("#drag-ans-list");
+		alert("responseSavedQuiz - Start draggables - about to remove artifacts");
 		// remove any residual li artifacts
-		while(choiceList.hasChildNodes()) {
-			choiceList.removeChild(choiceList.lastChild);
+		while($("#drag-ans-list").children().size() > 0) {
+			alert("removing one...");
+			$("#drag-ans-list").children().last().remove();
 		}
+		alert("responseSavedQuiz - Start draggables 2");
 		
 		$.each(quizContent.draggables, function(i, draggable) {
+			alert("draggables - each " + i);
 			draggable = $.parseJSON(draggable);			
 			var newDraggable = document.createElement("li");
 			newDraggable.setAttribute("id", draggable.draggable);
@@ -764,16 +681,15 @@ function responseSavedQuiz(quizJsonStr) {
 			newDraggable.setAttribute("ondragstart", 'dragText(event)');
 			newDraggable.setAttribute("style", "cursor: move");
 			newDraggable.innerHTML = draggable.draggable;
-			choiceList.appendChild(newDraggable);
-			logDiagnostic("responseSavedQuiz[draggables] - draggable: " + draggable.draggable + " | dispOrder: " + draggable.dispOrder);
+			$("#drag-ans-list").append(newDraggable);
+			alert("responseSavedQuiz[draggables] - draggable: " + draggable.draggable + " | dispOrder: " + draggable.dispOrder);
 		});
 	}
+	alert("responseSavedQuiz - finished with draggables. Now on to display...");
 		
 	/* Display */
-	clozeQuestionsCreateArea = $("#cloze-questions-create");
-	clozeQuestionsCreateArea.style.display = 'none';
-	clozeQuestionsPresentArea = $("#cloze-questions-present");
-	clozeQuestionsPresentArea.style.display = 'inline-block';
+	$("#cloze-questions-create").hide();
+	$("#cloze-questions-present").show();
 	$("#creator-admin-panel").hide();
 	$("#taker-admin-panel").show();
 	$("#save-quiz-button").hide();
@@ -786,6 +702,8 @@ function responseSavedQuiz(quizJsonStr) {
 	$("#savedQuizMessage").show();
 	$("#app-name").innerHTML = "Quiz Wiz"
 	document.title = "Wiz Quiz";
+	
+	alert("responseSavedQuiz - end");
 } // End - responseSavedQuiz
 
 
