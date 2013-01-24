@@ -58,7 +58,7 @@ function saveText() {
 	$("#cloze-text-edit").hide();
 	$("#cloze-questions-create").show();
 	$("#save-text-button").hide();
-	$("#edit-text-button").show();
+	//$("#edit-text-button").show();
 
 	$("#enterTextMessage").hide();
 	$("#savedTextMessage").show();
@@ -566,8 +566,9 @@ function procDragDropCheck(checkbox) {
 		$('#drag-ans-list').css("border", "2px solid #EDBFAC");
 		$('#drag-ans-list').attr("contentEditable", "false");
 		$('#draggables-panel').hide();
-		$('#edit-draggables-button').hide();
+		$('#save-draggables-button').hide();
 	}
+	$('#save-quiz-button').show();
 } <!-- procDragDropCheck -->
 
 function initCkBx() {
