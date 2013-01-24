@@ -566,6 +566,7 @@ function procDragDropCheck(checkbox) {
 		$('#drag-ans-list').css("border", "2px solid #EDBFAC");
 		$('#drag-ans-list').attr("contentEditable", "false");
 		$('#draggables-panel').hide();
+		$('#edit-draggables-button').hide();
 	}
 } <!-- procDragDropCheck -->
 
