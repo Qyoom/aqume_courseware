@@ -150,7 +150,7 @@ function checkAnswers() {
 		// Potentially multiple answer fields per questionP
 		var ansFields = []; // multiple index/text-value pairs
 		// Collect values from both text input fields and correct span displays (for retry attempts)
-		var takerAns = ""
+		var takerAns = "";
 		$(this).children('input:text, span.correctAns').each(function(){ 
 			var wordInd = parseInt(this.id); // this: one input field. Multiple input fields per questionP are ordered by index.
 			var taker
@@ -341,15 +341,17 @@ function saveQuiz() {
 	};
 		
 	/* Draggables */
-	var sequence_num = 0;
 	if(dragCheckBox.checked) {
-		$("#drag-ans-list").children(".draggable").each(function () {
-			$(this).html($(this).html().replace(/(<br>|<br>$)/g,""));
-			if($(this).html() !== "") {
-				draggables.push({ "draggable" : $(this).html(), "dispOrder" : sequence_num});
-			} else sequence_num--; // don't increment for blanks
-		});
+		choiceList = document.getElementById('drag-ans-list');
+		for(var i = 0, s = 1; i < choiceList.childNodes.length; i++, s++) {
+			choiceList.childNodes[i].innerHTML = choiceList.childNodes[i].innerHTML.replace(/(<br>|<br>$)/g,"");
+			if(choiceList.childNodes[i].innerHTML !== "") {
+				logDiagnostic("saveQuiz - draggable " + i + " : " + choiceList.childNodes[i].innerHTML);
+				draggables.push({ "draggable" : choiceList.childNodes[i].innerHTML, "dispOrder" : s});
+			} else s--; // don't increment for blanks
+		}
 	}
+	
 	logDiagnostic("saveQuiz - draggables: " + draggables);
 	
 	/** Ajax */
