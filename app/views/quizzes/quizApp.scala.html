@@ -18,14 +18,14 @@
                 <h1 id="app-name">Quiz Wiz Creator</h1>
                 <div id="quiz-title-div">
                     <label id="quiz-title-label" style="display:inline-block" style="float:left">Quiz Title:</label>
-                    <input id="quiz-title-create" style="display:inline-block type="text" style="float:left" size="40"/>
+                    <input id="quiz-title-create" style="display:inline-block type="text" style="float:left" size="40" value="Octopus's Garden"/>
                     <label id="quiz-title-display" style="display:inline-block" style="float:left"></label>
             	</div>
                 <div id="creator-admin-panel" class="admin-panel">
-                    <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="allowRetriesCheckbox" onClick="procAllowRetry(this)"/>
+                    <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="allowRetriesCheckbox" onClick="procAllowRetry(this)" checked/>
                         Allow Retries</label>
                     <br />
-                    <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="DandDCheckbox" onClick="procDragDropCheck(this)"/>
+                    <label><input type="checkbox" name="adminCheckboxGroup" value="checkbox" id="DandDCheckbox" onClick="procDragDropCheck(this)" checked/>
                         Allow Drag and Drop</label>
                     <br />
                 </div><!--admin-panel-->
@@ -34,7 +34,7 @@
             <div id="taker-admin-panel" class="admin-panel" style="display: none"></div>
             <p id="enterTextMessage" class="user-message" draggable='false' style="display: inline-block">
             	Type or paste text for your cloze quiz (a song lyric, or any kind of text). You can break text into
-                individual lines or paragraphs using the return key. Save the text when you are finished.</p>
+                individual lines or paragraphs using the return key. Save the text when you are finished. <span>(Sample text provided)</span></p>
             <p id="savedTextMessage" class="user-message" draggable='false' style="display: none">
                 Double-click any word to create a blank cloze field. Click the 'Edit Text' button
                 to modify the quiz text. Click checkboxes to allow drag-and-drop answers or multiple retries. 

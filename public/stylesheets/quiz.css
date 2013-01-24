@@ -135,6 +135,10 @@
 	background-image:url(../images/1.png);
 }
 
+#enterTextMessage span {
+	font-style:italic;
+}
+
 #savedTextMessage {
 	background-image:url(../images/2.png);
 }

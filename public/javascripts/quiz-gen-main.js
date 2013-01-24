@@ -10,7 +10,7 @@ var scoreMessage;
 var doDiagnosticLogging = false;
 var createClozeAllowed = true;
 var allowRetries = false;
-var allowDragAndDrop = false;
+var allowDragAndDrop = true;
 var mode = ""; // either 'create' or 'take'
 
 // Counters
@@ -35,6 +35,14 @@ var ansAssoc     = {}; // for associative collecting and replacement
 var answers      = []; // final data version for post
 var draggables   = [];
 
+// ************** Init **************************//
+
+// Prepopulate with sample quiz text for demo.
+$(document).ready(
+    function(){
+    	$("#cloze-text-edit").html("I'd like to be under the sea\nIn an octopus's garden in the shade\nHe'd let us in, knows where we've been\nIn his octopus's garden in the shade\n\nI'd ask my friends to come and see\nAn octopus's garden with me\nI'd like to be under the sea\nIn an octopus's garden in the shade\n\nWe would be warm below the storm\nIn our little hideaway beneath the waves\nResting our head on the sea bed\nIn an octopus's garden near a cave");
+    }
+);
 
 // *************** UI Handlers ******************//
 
@@ -98,24 +106,19 @@ function selectedTextHandler(e) {
 	
 	// Constrain selected text to single word
 	if(!selectedText || selectedText == "" || cnt(selectedText) > 1) return;
-	
-	logDiagnostic("selectedTextHandler - selectedText.rangeCount[2]: " + selectedText.rangeCount);
-	
+		
 	// Get index of selected word. See http://jsfiddle.net/timdown/VxTfu/
-	logDiagnostic("selectedTextHandler - target.innerHTML[1]: " + target.innerHTML);
 	var rangeIndexCache = target.innerHTML;
 	var anyCurrentCloze = target.getElementsByClassName("cloze-field"); // NodeList
 	if(anyCurrentCloze.length > 0) {
 		target.innerHTML = target.innerHTML.replace(/\n|<.*?>/, anyCurrentCloze[0].name);
 	}
 	if (selectedText.rangeCount) {
-		logDiagnostic("selectedTextHandler - selectedText.rangeCount[3]: " + selectedText.rangeCount);
 		// Get the selected range
         var range = selectedText.getRangeAt(0);
 		// Check that the selection is wholly contained within the target tag
 		if (range.commonAncestorContainer == target.firstChild) {
 			var precedingRange = document.createRange();
-			logDiagnostic("selectedTextHandler - precedingRange: " + precedingRange);
             precedingRange.setStartBefore(target.firstChild);
 			precedingRange.setEnd(range.startContainer, range.startOffset);
 			var textPrecedingSelection = precedingRange.toString();
@@ -431,8 +434,8 @@ function processClozeField(target, selectedText, clozeTextIndex) {
 	draggable.setAttribute("class", "draggable");
 	
 	$("#drag-ans-list").append(draggable);
-		
-	if(allowDragAndDrop=='true') {
+	
+	if(allowDragAndDrop) {
 		$("#edit-draggables-button").show();
 		$("#draggables-panel").show();
 				
@@ -548,7 +551,7 @@ function procAllowRetry(checkbox) {
 function procDragDropCheck(checkbox) {
 	logDiagnostic("quiz-gen-main.procDragDropCheck - TOP");
 	if(checkbox.checked) {
-		allowDragAndDrop="true";
+		allowDragAndDrop=true;
 		if($('#drag-ans-list').children().size() > 0) {
 			$('#draggables-panel').show();
 			$('#edit-draggables-button').show();
@@ -558,7 +561,7 @@ function procDragDropCheck(checkbox) {
 		}
 	}
 	else { // checkbox unchecked
-		allowDragAndDrop="false";
+		allowDragAndDrop=false;
 		createClozeAllowed = true; // Since we are not allowing editing, we need to be sure we can create cloze inputs
 		$('#drag-ans-list').css("border", "2px solid #EDBFAC");
 		$('#drag-ans-list').attr("contentEditable", "false");
